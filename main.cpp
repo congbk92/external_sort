@@ -10,10 +10,14 @@
 
 using namespace std;
 
+inline bool wrapper_lexicographical_compare(const string& s1, const string& s2){
+    return lexicographical_compare(s1.cbegin(), s1.cend(), s2.cbegin(), s2.cend());
+}
 
-/* */
-#define MAX_IN_BUFFER_SIZE 4
-#define MAX_OUT_BUFFER_SIZE 4
+/*************/
+#define MAX_IN_BUFFER_SIZE 2
+#define MAX_OUT_BUFFER_SIZE 2
+
 
 std::deque<vector<string>> inBuffer;
 std::deque<vector<string>> outBuffer;
@@ -23,11 +27,6 @@ std::condition_variable in_cv;
 std::condition_variable out_cv;
 bool reader_finished = false;
 bool sorter_finished = false;
-/**/
-
-inline bool wrapper_lexicographical_compare(const string& s1, const string& s2){
-    return lexicographical_compare(s1.cbegin(), s1.cend(), s2.cbegin(), s2.cend());
-}
 
 void FileReader(const string& inputFile, long heapMemLimit){
     ifstream inF(inputFile, ifstream::in);
@@ -75,6 +74,7 @@ void Sorter(){
 
         //Sort
         sort(buffer.begin(), buffer.end(), wrapper_lexicographical_compare);
+        //To Do: Try lock and add to internal buffer
 
         {
             std::unique_lock<std::mutex> out_lock(out_mutex);
@@ -88,9 +88,9 @@ void Sorter(){
     cout<<"Sorter Finished"<<endl;
 }
 
-void FileWriter(const string& inputFile){
+void FileWriter(const string& inputFile, int& numRun){
     bool isDone = false;
-    int counter = 0;
+    numRun = 0;
     while(!isDone) {
         vector<string> buffer;
         {
@@ -103,23 +103,31 @@ void FileWriter(const string& inputFile){
         }
         out_cv.notify_one();
         //Store
-        ofstream outF(inputFile + "_" + to_string(counter), ofstream::out);
+        ofstream outF(inputFile + "_" + to_string(numRun), ofstream::out);
         for(auto& x : buffer){
             outF<<x<<endl;
         }
         outF.close();
-        counter++;
+        numRun++;
     }
     cout<<"FileWriter Finished"<<endl;
 }
 
-void InitialPhase(const string& inputFile, long heapMemLimit){
+int InitialPhase(const string& inputFile, long heapMemLimit){
+    int numRun = 0;
     std::thread t1(FileReader, inputFile, heapMemLimit);
 	std::thread t2(Sorter);
-    std::thread t3(FileWriter, inputFile);
+    std::thread t3(FileWriter, inputFile, std::ref(numRun));
 	t1.join();
 	t2.join();
     t3.join();
+    return numRun;
+}
+
+
+/*************/
+void MergedPhase(const string& inputFile, const string& outputFile, int numRun, long heapMemLimit){
+
 }
 
 int main(int argc, char **argv)
@@ -139,10 +147,11 @@ int main(int argc, char **argv)
     ifstream inF(inputFile, ifstream::in);
     
     //Initial phase
-    InitialPhase(inputFile, memLimitSize);
+    int numRun = InitialPhase(inputFile, memLimitSize);
+    std::cout << "InitialPhase numRun =  "<<numRun<<std::endl;
 
     //Merged phase
-
+    MergedPhase(inputFile, outputFile, numRun, memLimitSize);
 
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     std::cout << "Elapsed time = " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << "[s]" << std::endl;
