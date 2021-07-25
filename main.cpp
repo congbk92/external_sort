@@ -48,6 +48,10 @@ bool open_mmap(mmap_info &info, const std::string& fileName, int flag, off_t siz
         cout<<"Can't open file descriptor of"<<fileName<<endl;
         return false;
     }
+
+    /* Advise the kernel of our access pattern.  */
+    //posix_fadvise(info.fd, 0, 0, 1);  // FDADVICE_SEQUENTIAL
+
     if (size < 0){
         struct stat st;
         fstat(info.fd, &st);
@@ -55,7 +59,7 @@ bool open_mmap(mmap_info &info, const std::string& fileName, int flag, off_t siz
     }
     info.size = size;
 
-    info.beginPos = (char*) mmap(0, info.size, PROT_READ, MAP_PRIVATE, info.fd, 0);
+    info.beginPos = (char*) mmap(0, info.size, PROT_READ, MAP_SHARED, info.fd, 0);
     
     if (info.beginPos == MAP_FAILED) {
         close(info.fd);
@@ -64,6 +68,8 @@ bool open_mmap(mmap_info &info, const std::string& fileName, int flag, off_t siz
     }
     info.endPos = info.beginPos + info.size;
     info.currentPos = info.beginPos;
+
+    //madvise(info.beginPos, info.size, MADV_SEQUENTIAL);
 
     return true;
 }
