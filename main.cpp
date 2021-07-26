@@ -228,8 +228,8 @@ void MergedFileWriter(const string& outputFile, int heapMemLimit){
     batch_size = batch_size > block_size ? batch_size : block_size;
 
     bool isDone = false;
-    string buffer;
-    buffer.reserve(batch_size);
+    //string buffer;
+    //buffer.reserve(batch_size);
     FILE * pFile;
     pFile = fopen (outputFile.c_str(), "wb");
 
@@ -244,13 +244,14 @@ void MergedFileWriter(const string& outputFile, int heapMemLimit){
             isDone = (merger_finished && meregedOutBuffer.empty());
         }
         out_cv.notify_one();
-
+        fwrite (tmp_str.c_str() , sizeof(char), tmp_str.size(), pFile);
         /*
         if ((buffer.size() + tmp_str.size() <=  batch_size) || isDone){
             buffer += tmp_str;
         } else if (buffer.size() + tmp_str.size() <  batch_size) {
             buffer += subtmp_str.size()
         }*/
+        /*
         buffer += tmp_str;
         if (buffer.size() >= batch_size) {
             fwrite (buffer.c_str() , sizeof(char), batch_size, pFile);
@@ -259,7 +260,7 @@ void MergedFileWriter(const string& outputFile, int heapMemLimit){
         }
         if (isDone){
             fwrite (buffer.c_str() , sizeof(char), buffer.size(), pFile);
-        }
+        }*/
     }
     fclose(pFile);
     //cout<<"MergedFileWriter Finished"<<endl;
@@ -274,8 +275,10 @@ void KWayMerged(int k, int base, const string& inputFile, long heapMemLimit){
     vector<pair<int, string>> heapLines(k);
     vector<vector<string>> linesBuffer(k); 
     int block_size = getpagesize();
-    int batch_size = heapMemLimit/2/k;
+    int batch_size = (heapMemLimit/2/(k+1)/block_size)*block_size;
     batch_size = batch_size > block_size ? batch_size : block_size;
+    int out_buffer_size =(heapMemLimit/2/(MAX_OUT_BUFFER_SIZE+2)/block_size)*block_size;
+    out_buffer_size = out_buffer_size > block_size ? out_buffer_size : block_size;
     for (int i = 0; i < k; i++){
         open_mmap(mmapInfos[i], inputFile + "_" + to_string(i + base), O_RDONLY);
         readlines_mmap(mmapInfos[i], linesBuffer[i], batch_size);
@@ -285,11 +288,11 @@ void KWayMerged(int k, int base, const string& inputFile, long heapMemLimit){
 
     std::make_heap (heapLines.begin(),heapLines.end(), wrapper_lexicographical_compare_1);
     string buffer;
-    buffer.reserve(heapMemLimit/3);
+    buffer.reserve(out_buffer_size);
     while(heapLines.size()) {
         std::pop_heap(heapLines.begin(),heapLines.end(), wrapper_lexicographical_compare_1);
         int mmapIdx = heapLines.back().first;
-        buffer += string(move(heapLines.back().second));
+        buffer += heapLines.back().second;
         heapLines.pop_back();
         
         if (linesBuffer[mmapIdx].size() > 0){
@@ -307,7 +310,7 @@ void KWayMerged(int k, int base, const string& inputFile, long heapMemLimit){
             remove((inputFile + "_" + to_string(mmapIdx + base)).c_str());
         }
 
-        if (buffer.size() > heapMemLimit/3 || heapLines.empty()) {
+        if (buffer.size() > out_buffer_size || heapLines.empty()) {
             {
                 std::unique_lock<std::mutex> out_lock(out_mutex);
                 //When the queue is full, it returns false, it has been blocked in this line
@@ -330,7 +333,7 @@ void MergedPhase(const string& inputFile, const string& outputFile, int numRun, 
     int numRunStep = 0; // number run at this step
     string outputMergedFile;
     while (numRun > 1){
-        int k = numRun - base > 100 ? 100 : numRun - base; //To do
+        int k = numRun - base > 50 ? 50 : numRun - base; //To do
         if (k < numRun){
             outputMergedFile = inputFile + "_" + to_string(step+1) + "_" + to_string(numRunStep);
         } else {

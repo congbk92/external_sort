@@ -1,0 +1,766 @@
+desc: (none)
+cmd: ./main.out testcase/world192_100.txt testcase/world192_100_out.txt 8388608
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=2213315898
+mem_heap_B=22516522
+mem_heap_extra_B=1611654
+mem_stacks_B=0
+heap_tree=peak
+n4: 22516522 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 9438208 0x117C1F: __gnu_cxx::new_allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >::allocate(unsigned long, void const*) (new_allocator.h:114)
+  n2: 9438208 0x116348: std::allocator_traits<std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::allocate(std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >&, unsigned long) (alloc_traits.h:444)
+   n1: 9437184 0x11397D: std::_Vector_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_allocate(unsigned long) (stl_vector.h:343)
+    n1: 9437184 0x110854: void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (vector.tcc:440)
+     n1: 9437184 0x10E99F: void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (vector.tcc:121)
+      n1: 9437184 0x10EAFF: std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::push_back(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (stl_vector.h:1201)
+       n1: 9437184 0x10BE47: FileReader(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:130)
+        n1: 9437184 0x11BD34: void std::__invoke_impl<void, void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+         n1: 9437184 0x11B8FC: std::__invoke_result<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+          n1: 9437184 0x11B3FE: void std::thread::_Invoker<std::tuple<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul>(std::_Index_tuple<0ul, 1ul, 2ul>) (thread:244)
+           n1: 9437184 0x11B1CE: std::thread::_Invoker<std::tuple<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+            n1: 9437184 0x11B097: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+             n1: 9437184 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+              n1: 9437184 0x4A5E608: start_thread (pthread_create.c:477)
+               n0: 9437184 0x4B9A292: clone (clone.S:95)
+   n0: 1024 in 1 place, below massif's threshold (1.00%)
+ n1: 7864324 0x499B35D: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned long, unsigned long, char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n2: 7864324 0x499CB52: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_append(char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+   n1: 7864324 0x10C14D: Sorter() (main.cpp:167)
+    n1: 7864324 0x11BC77: void std::__invoke_impl<void, void (*)()>(std::__invoke_other, void (*&&)()) (invoke.h:60)
+     n1: 7864324 0x11B7FF: std::__invoke_result<void (*)()>::type std::__invoke<void (*)()>(void (*&&)()) (invoke.h:95)
+      n1: 7864324 0x11B397: void std::thread::_Invoker<std::tuple<void (*)()> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:244)
+       n1: 7864324 0x11B18C: std::thread::_Invoker<std::tuple<void (*)()> >::operator()() (thread:251)
+        n1: 7864324 0x11B073: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)()> > >::_M_run() (thread:195)
+         n1: 7864324 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 7864324 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 7864324 0x4B9A292: clone (clone.S:95)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n2: 5126314 0x499DD3C: void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 5126258 0x10BE31: FileReader(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:130)
+   n1: 5126258 0x11BD34: void std::__invoke_impl<void, void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+    n1: 5126258 0x11B8FC: std::__invoke_result<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+     n1: 5126258 0x11B3FE: void std::thread::_Invoker<std::tuple<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul>(std::_Index_tuple<0ul, 1ul, 2ul>) (thread:244)
+      n1: 5126258 0x11B1CE: std::thread::_Invoker<std::tuple<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+       n1: 5126258 0x11B097: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+        n1: 5126258 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+         n1: 5126258 0x4A5E608: start_thread (pthread_create.c:477)
+          n0: 5126258 0x4B9A292: clone (clone.S:95)
+  n0: 56 in 2 places, all below massif's threshold (1.00%)
+ n0: 87676 in 12 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=2
+#-----------
+time=8546497410
+mem_heap_B=16232578
+mem_heap_extra_B=1243030
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=13835798557
+mem_heap_B=16226130
+mem_heap_extra_B=1242918
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=18609378858
+mem_heap_B=12814477
+mem_heap_extra_B=829179
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=22859574131
+mem_heap_B=16234767
+mem_heap_extra_B=1239465
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=29850983282
+mem_heap_B=18370539
+mem_heap_extra_B=1277061
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=34603086479
+mem_heap_B=16225309
+mem_heap_extra_B=1243211
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=42610823555
+mem_heap_B=16233145
+mem_heap_extra_B=1242591
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=47912433828
+mem_heap_B=16232706
+mem_heap_extra_B=1241574
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=52156991536
+mem_heap_B=16238382
+mem_heap_extra_B=1240946
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=56435240597
+mem_heap_B=16233536
+mem_heap_extra_B=1240896
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=63328323218
+mem_heap_B=16233792
+mem_heap_extra_B=1240840
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=67581491929
+mem_heap_B=16223623
+mem_heap_extra_B=1243753
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=71832639580
+mem_heap_B=16234609
+mem_heap_extra_B=1239623
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=76626769017
+mem_heap_B=14271464
+mem_heap_extra_B=1240600
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=84554452707
+mem_heap_B=12814112
+mem_heap_extra_B=826904
+mem_stacks_B=0
+heap_tree=detailed
+n4: 12814112 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 5898325 0x499B35D: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned long, unsigned long, char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n2: 5898325 0x499CB52: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_append(char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+   n1: 5898274 0x10C14D: Sorter() (main.cpp:167)
+    n1: 5898274 0x11BC77: void std::__invoke_impl<void, void (*)()>(std::__invoke_other, void (*&&)()) (invoke.h:60)
+     n1: 5898274 0x11B7FF: std::__invoke_result<void (*)()>::type std::__invoke<void (*)()>(void (*&&)()) (invoke.h:95)
+      n1: 5898274 0x11B397: void std::thread::_Invoker<std::tuple<void (*)()> >::_M_invoke<0ul>(std::_Index_tuple<0ul>) (thread:244)
+       n1: 5898274 0x11B18C: std::thread::_Invoker<std::tuple<void (*)()> >::operator()() (thread:251)
+        n1: 5898274 0x11B073: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)()> > >::_M_run() (thread:195)
+         n1: 5898274 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 5898274 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 5898274 0x4B9A292: clone (clone.S:95)
+   n0: 51 in 1 place, below massif's threshold (1.00%)
+ n1: 4195328 0x117C1F: __gnu_cxx::new_allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >::allocate(unsigned long, void const*) (new_allocator.h:114)
+  n2: 4195328 0x116348: std::allocator_traits<std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::allocate(std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >&, unsigned long) (alloc_traits.h:444)
+   n1: 4194304 0x11397D: std::_Vector_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_allocate(unsigned long) (stl_vector.h:343)
+    n1: 4194304 0x110854: void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (vector.tcc:440)
+     n1: 4194304 0x10E99F: void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (vector.tcc:121)
+      n1: 4194304 0x10EAFF: std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::push_back(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (stl_vector.h:1201)
+       n1: 4194304 0x10BE47: FileReader(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:130)
+        n1: 4194304 0x11BD34: void std::__invoke_impl<void, void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+         n1: 4194304 0x11B8FC: std::__invoke_result<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+          n1: 4194304 0x11B3FE: void std::thread::_Invoker<std::tuple<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul>(std::_Index_tuple<0ul, 1ul, 2ul>) (thread:244)
+           n1: 4194304 0x11B1CE: std::thread::_Invoker<std::tuple<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+            n1: 4194304 0x11B097: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+             n1: 4194304 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+              n1: 4194304 0x4A5E608: start_thread (pthread_create.c:477)
+               n0: 4194304 0x4B9A292: clone (clone.S:95)
+   n0: 1024 in 1 place, below massif's threshold (1.00%)
+ n2: 2636879 0x499DD3C: void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 2636823 0x10BE31: FileReader(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:130)
+   n1: 2636823 0x11BD34: void std::__invoke_impl<void, void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+    n1: 2636823 0x11B8FC: std::__invoke_result<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+     n1: 2636823 0x11B3FE: void std::thread::_Invoker<std::tuple<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul>(std::_Index_tuple<0ul, 1ul, 2ul>) (thread:244)
+      n1: 2636823 0x11B1CE: std::thread::_Invoker<std::tuple<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+       n1: 2636823 0x11B097: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+        n1: 2636823 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+         n1: 2636823 0x4A5E608: start_thread (pthread_create.c:477)
+          n0: 2636823 0x4B9A292: clone (clone.S:95)
+  n0: 56 in 2 places, all below massif's threshold (1.00%)
+ n0: 83580 in 12 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=17
+#-----------
+time=92038951137
+mem_heap_B=16227927
+mem_heap_extra_B=1243201
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=97932770133
+mem_heap_B=8628186
+mem_heap_extra_B=577646
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=102576392043
+mem_heap_B=8142945
+mem_heap_extra_B=325903
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=106854972097
+mem_heap_B=13090363
+mem_heap_extra_B=939261
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=112200954982
+mem_heap_B=12261447
+mem_heap_extra_B=1172169
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=22
+#-----------
+time=116482677497
+mem_heap_B=11963553
+mem_heap_extra_B=1152223
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=23
+#-----------
+time=120760304107
+mem_heap_B=11673204
+mem_heap_extra_B=1101092
+mem_stacks_B=0
+heap_tree=detailed
+n5: 11673204 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 5243904 0x117C1F: __gnu_cxx::new_allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >::allocate(unsigned long, void const*) (new_allocator.h:114)
+  n2: 5243904 0x116348: std::allocator_traits<std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::allocate(std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >&, unsigned long) (alloc_traits.h:444)
+   n1: 5242880 0x11397D: std::_Vector_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_allocate(unsigned long) (stl_vector.h:343)
+    n1: 5242880 0x110854: void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (vector.tcc:440)
+     n2: 5242880 0x10E99F: void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (vector.tcc:121)
+      n1: 5242880 0x10E38F: readlines_mmap(mmap_info&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, int) (main.cpp:102)
+       n1: 5242880 0x10CC4C: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:284)
+        n1: 5242880 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+         n1: 5242880 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+          n1: 5242880 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+           n1: 5242880 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+            n1: 5242880 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+             n1: 5242880 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+              n1: 5242880 0x4A5E608: start_thread (pthread_create.c:477)
+               n0: 5242880 0x4B9A292: clone (clone.S:95)
+      n0: 0 in 1 place, below massif's threshold (1.00%)
+   n0: 1024 in 1 place, below massif's threshold (1.00%)
+ n2: 2145149 0x499DD3C: void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n2: 2145093 0x10E37C: readlines_mmap(mmap_info&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, int) (main.cpp:102)
+   n1: 2145093 0x10CF66: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:303)
+    n1: 2145093 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+     n1: 2145093 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+      n1: 2145093 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+       n1: 2145093 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+        n1: 2145093 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+         n1: 2145093 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 2145093 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 2145093 0x4B9A292: clone (clone.S:95)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+  n0: 56 in 3 places, all below massif's threshold (1.00%)
+ n1: 2097255 0x499B35D: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned long, unsigned long, char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n2: 2097255 0x499CB52: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_append(char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+   n1: 2097153 0x10CDE9: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:295)
+    n1: 2097153 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+     n1: 2097153 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+      n1: 2097153 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+       n1: 2097153 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+        n1: 2097153 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+         n1: 2097153 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 2097153 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 2097153 0x4B9A292: clone (clone.S:95)
+   n0: 102 in 2 places, all below massif's threshold (1.00%)
+ n2: 2097216 0x117A26: void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag) (basic_string.tcc:219)
+  n1: 2097186 0x11779E: void __gnu_cxx::new_allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >::construct<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (new_allocator.h:147)
+   n1: 2097186 0x115D79: void std::allocator_traits<std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::construct<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>(std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (alloc_traits.h:484)
+    n1: 2097186 0x112FC1: std::deque<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::push_back(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (stl_deque.h:1574)
+     n1: 2097186 0x11012E: std::queue<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::deque<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >::push(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (stl_queue.h:260)
+      n1: 2097186 0x10D158: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:319)
+       n1: 2097186 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+        n1: 2097186 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+         n1: 2097186 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+          n1: 2097186 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+           n1: 2097186 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+            n1: 2097186 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+             n1: 2097186 0x4A5E608: start_thread (pthread_create.c:477)
+              n0: 2097186 0x4B9A292: clone (clone.S:95)
+  n0: 30 in 3 places, all below massif's threshold (1.00%)
+ n0: 89680 in 16 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=24
+#-----------
+time=127172745265
+mem_heap_B=13284369
+mem_heap_extra_B=910047
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=25
+#-----------
+time=132516267538
+mem_heap_B=11414533
+mem_heap_extra_B=994563
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=140000902530
+mem_heap_B=12008555
+mem_heap_extra_B=1179533
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=27
+#-----------
+time=147489059798
+mem_heap_B=12855388
+mem_heap_extra_B=1090212
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=151775432446
+mem_heap_B=12360117
+mem_heap_extra_B=1175651
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=159181849946
+mem_heap_B=12882711
+mem_heap_extra_B=1059881
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=30
+#-----------
+time=163367526475
+mem_heap_B=11120619
+mem_heap_extra_B=989605
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=171734212734
+mem_heap_B=8562895
+mem_heap_extra_B=359193
+mem_stacks_B=0
+heap_tree=detailed
+n4: 8562895 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 5243904 0x117C1F: __gnu_cxx::new_allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >::allocate(unsigned long, void const*) (new_allocator.h:114)
+  n2: 5243904 0x116348: std::allocator_traits<std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::allocate(std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >&, unsigned long) (alloc_traits.h:444)
+   n1: 5242880 0x11397D: std::_Vector_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_allocate(unsigned long) (stl_vector.h:343)
+    n1: 5242880 0x110854: void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (vector.tcc:440)
+     n2: 5242880 0x10E99F: void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (vector.tcc:121)
+      n1: 5242880 0x10E38F: readlines_mmap(mmap_info&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, int) (main.cpp:102)
+       n1: 5242880 0x10CC4C: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:284)
+        n1: 5242880 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+         n1: 5242880 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+          n1: 5242880 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+           n1: 5242880 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+            n1: 5242880 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+             n1: 5242880 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+              n1: 5242880 0x4A5E608: start_thread (pthread_create.c:477)
+               n0: 5242880 0x4B9A292: clone (clone.S:95)
+      n0: 0 in 1 place, below massif's threshold (1.00%)
+   n0: 1024 in 1 place, below massif's threshold (1.00%)
+ n1: 2097255 0x499B35D: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned long, unsigned long, char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n2: 2097255 0x499CB52: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_append(char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+   n1: 2097153 0x10CDE9: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:295)
+    n1: 2097153 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+     n1: 2097153 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+      n1: 2097153 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+       n1: 2097153 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+        n1: 2097153 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+         n1: 2097153 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 2097153 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 2097153 0x4B9A292: clone (clone.S:95)
+   n0: 102 in 2 places, all below massif's threshold (1.00%)
+ n2: 1132026 0x499DD3C: void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n2: 1131970 0x10E37C: readlines_mmap(mmap_info&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, int) (main.cpp:102)
+   n1: 1131970 0x10CF66: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:303)
+    n1: 1131970 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+     n1: 1131970 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+      n1: 1131970 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+       n1: 1131970 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+        n1: 1131970 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+         n1: 1131970 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 1131970 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 1131970 0x4B9A292: clone (clone.S:95)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+  n0: 56 in 3 places, all below massif's threshold (1.00%)
+ n0: 89710 in 17 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=32
+#-----------
+time=175947483914
+mem_heap_B=10480218
+mem_heap_extra_B=307534
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=33
+#-----------
+time=182304009300
+mem_heap_B=8273857
+mem_heap_extra_B=264079
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=186487335548
+mem_heap_B=10700129
+mem_heap_extra_B=288911
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=190670700842
+mem_heap_B=8347505
+mem_heap_extra_B=229207
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=194854052291
+mem_heap_B=8443309
+mem_heap_extra_B=251619
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=37
+#-----------
+time=201129076194
+mem_heap_B=10062030
+mem_heap_extra_B=457410
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=205312455484
+mem_heap_B=9971465
+mem_heap_extra_B=431359
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=209495775887
+mem_heap_B=8745001
+mem_heap_extra_B=380703
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=213681168911
+mem_heap_B=14110204
+mem_heap_extra_B=1285836
+mem_stacks_B=0
+heap_tree=detailed
+n4: 14110204 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 9438208 0x117C1F: __gnu_cxx::new_allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >::allocate(unsigned long, void const*) (new_allocator.h:114)
+  n2: 9438208 0x116348: std::allocator_traits<std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::allocate(std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >&, unsigned long) (alloc_traits.h:444)
+   n1: 9437184 0x11397D: std::_Vector_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_allocate(unsigned long) (stl_vector.h:343)
+    n1: 9437184 0x110854: void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (vector.tcc:440)
+     n2: 9437184 0x10E99F: void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (vector.tcc:121)
+      n2: 9437184 0x10E38F: readlines_mmap(mmap_info&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, int) (main.cpp:102)
+       n1: 8388608 0x10CF66: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:303)
+        n1: 8388608 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+         n1: 8388608 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+          n1: 8388608 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+           n1: 8388608 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+            n1: 8388608 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+             n1: 8388608 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+              n1: 8388608 0x4A5E608: start_thread (pthread_create.c:477)
+               n0: 8388608 0x4B9A292: clone (clone.S:95)
+       n1: 1048576 0x10CC4C: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:284)
+        n1: 1048576 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+         n1: 1048576 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+          n1: 1048576 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+           n1: 1048576 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+            n1: 1048576 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+             n1: 1048576 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+              n1: 1048576 0x4A5E608: start_thread (pthread_create.c:477)
+               n0: 1048576 0x4B9A292: clone (clone.S:95)
+      n0: 0 in 1 place, below massif's threshold (1.00%)
+   n0: 1024 in 1 place, below massif's threshold (1.00%)
+ n2: 2485031 0x499DD3C: void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n2: 2484975 0x10E37C: readlines_mmap(mmap_info&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, int) (main.cpp:102)
+   n1: 2484975 0x10CF66: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:303)
+    n1: 2484975 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+     n1: 2484975 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+      n1: 2484975 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+       n1: 2484975 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+        n1: 2484975 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+         n1: 2484975 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 2484975 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 2484975 0x4B9A292: clone (clone.S:95)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+  n0: 56 in 3 places, all below massif's threshold (1.00%)
+ n1: 2097255 0x499B35D: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned long, unsigned long, char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n2: 2097255 0x499CB52: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_append(char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+   n1: 2097153 0x10CDE9: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:295)
+    n1: 2097153 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+     n1: 2097153 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+      n1: 2097153 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+       n1: 2097153 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+        n1: 2097153 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+         n1: 2097153 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 2097153 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 2097153 0x4B9A292: clone (clone.S:95)
+   n0: 102 in 2 places, all below massif's threshold (1.00%)
+ n0: 89710 in 17 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=41
+#-----------
+time=217864518112
+mem_heap_B=16431046
+mem_heap_extra_B=1210690
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=222051436470
+mem_heap_B=15869516
+mem_heap_extra_B=1309524
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=43
+#-----------
+time=226234785027
+mem_heap_B=17131298
+mem_heap_extra_B=1423038
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=232512034753
+mem_heap_B=14122145
+mem_heap_extra_B=888135
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=236696389942
+mem_heap_B=8001814
+mem_heap_extra_B=741058
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=46
+#-----------
+time=240904013417
+mem_heap_B=8528327
+mem_heap_extra_B=614569
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=47
+#-----------
+time=245098611706
+mem_heap_B=9480459
+mem_heap_extra_B=886037
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=253465280720
+mem_heap_B=8364304
+mem_heap_extra_B=486072
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=49
+#-----------
+time=259740264037
+mem_heap_B=8442432
+mem_heap_extra_B=566456
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=263923584569
+mem_heap_B=13772081
+mem_heap_extra_B=1116551
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=51
+#-----------
+time=268106919908
+mem_heap_B=12517048
+mem_heap_extra_B=1013584
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=52
+#-----------
+time=272293188770
+mem_heap_B=12486733
+mem_heap_extra_B=1034699
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=53
+#-----------
+time=276478374418
+mem_heap_B=11548664
+mem_heap_extra_B=568856
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=54
+#-----------
+time=280661697138
+mem_heap_B=10934848
+mem_heap_extra_B=679192
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=55
+#-----------
+time=284845019514
+mem_heap_B=10748698
+mem_heap_extra_B=553318
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=56
+#-----------
+time=289028341622
+mem_heap_B=10598113
+mem_heap_extra_B=721159
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=57
+#-----------
+time=293211662099
+mem_heap_B=12107668
+mem_heap_extra_B=755004
+mem_stacks_B=0
+heap_tree=detailed
+n5: 12107668 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 6292480 0x117C1F: __gnu_cxx::new_allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >::allocate(unsigned long, void const*) (new_allocator.h:114)
+  n2: 6292480 0x116348: std::allocator_traits<std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::allocate(std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >&, unsigned long) (alloc_traits.h:444)
+   n1: 6291456 0x11397D: std::_Vector_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_allocate(unsigned long) (stl_vector.h:343)
+    n1: 6291456 0x110854: void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (vector.tcc:440)
+     n2: 6291456 0x10E99F: void std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&) (vector.tcc:121)
+      n2: 6291456 0x10E38F: readlines_mmap(mmap_info&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, int) (main.cpp:102)
+       n1: 6291456 0x10CF66: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:303)
+        n1: 6291456 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+         n1: 6291456 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+          n1: 6291456 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+           n1: 6291456 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+            n1: 6291456 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+             n1: 6291456 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+              n1: 6291456 0x4A5E608: start_thread (pthread_create.c:477)
+               n0: 6291456 0x4B9A292: clone (clone.S:95)
+       n0: 0 in 1 place, below massif's threshold (1.00%)
+      n0: 0 in 1 place, below massif's threshold (1.00%)
+   n0: 1024 in 1 place, below massif's threshold (1.00%)
+ n1: 2097255 0x499B35D: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned long, unsigned long, char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n2: 2097255 0x499CB52: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_append(char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+   n1: 2097153 0x10CDE9: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:295)
+    n1: 2097153 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+     n1: 2097153 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+      n1: 2097153 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+       n1: 2097153 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+        n1: 2097153 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+         n1: 2097153 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 2097153 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 2097153 0x4B9A292: clone (clone.S:95)
+   n0: 102 in 2 places, all below massif's threshold (1.00%)
+ n2: 2097243 0x117A26: void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char*>(char*, char*, std::forward_iterator_tag) (basic_string.tcc:219)
+  n1: 2097213 0x11779E: void __gnu_cxx::new_allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >::construct<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (new_allocator.h:147)
+   n2: 2097213 0x115D79: void std::allocator_traits<std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::construct<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>(std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (alloc_traits.h:484)
+    n1: 2097213 0x112FC1: std::deque<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::push_back(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (stl_deque.h:1574)
+     n1: 2097213 0x11012E: std::queue<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::deque<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >::push(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (stl_queue.h:260)
+      n1: 2097213 0x10D158: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:319)
+       n1: 2097213 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+        n1: 2097213 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+         n1: 2097213 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+          n1: 2097213 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+           n1: 2097213 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+            n1: 2097213 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+             n1: 2097213 0x4A5E608: start_thread (pthread_create.c:477)
+              n0: 2097213 0x4B9A292: clone (clone.S:95)
+    n0: 0 in 1 place, below massif's threshold (1.00%)
+  n0: 30 in 3 places, all below massif's threshold (1.00%)
+ n2: 1531842 0x499DD3C: void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<char const*>(char const*, char const*, std::forward_iterator_tag) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n2: 1531786 0x10E37C: readlines_mmap(mmap_info&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, int) (main.cpp:102)
+   n1: 1531786 0x10CF66: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long) (main.cpp:303)
+    n1: 1531786 0x11BB3B: void std::__invoke_impl<void, void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(std::__invoke_other, void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:60)
+     n1: 1531786 0x11B66E: std::__invoke_result<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>::type std::__invoke<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long>(void (*&&)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int&&, int&&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&&, long&&) (invoke.h:95)
+      n1: 1531786 0x11B2EE: void std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::_M_invoke<0ul, 1ul, 2ul, 3ul, 4ul>(std::_Index_tuple<0ul, 1ul, 2ul, 3ul, 4ul>) (thread:244)
+       n1: 1531786 0x11B108: std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> >::operator()() (thread:251)
+        n1: 1531786 0x11B02B: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (*)(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, long), int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, long> > >::_M_run() (thread:195)
+         n1: 1531786 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 1531786 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 1531786 0x4B9A292: clone (clone.S:95)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+  n0: 56 in 3 places, all below massif's threshold (1.00%)
+ n0: 88848 in 16 places, all below massif's threshold (1.00%)
