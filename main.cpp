@@ -8,6 +8,7 @@
 #include <deque>
 #include <queue>
 #include <condition_variable>
+#include <cstdio>
 
 // for mmap
 #include <sys/stat.h>
@@ -20,10 +21,12 @@
 using namespace std;
 
 inline bool wrapper_lexicographical_compare(const string& s1, const string& s2){
+    //return atoi(s1.c_str()) < atoi(s2.c_str());
     return lexicographical_compare(s1.cbegin(), s1.cend(), s2.cbegin(), s2.cend());
 }
 
 inline bool wrapper_lexicographical_compare_1(const pair<int, string>& s1, const pair<int, string>& s2){
+    //return atoi(s1.second.c_str()) > atoi(s2.second.c_str());
     return !lexicographical_compare(s1.second.cbegin(), s1.second.cend(), s2.second.cbegin(), s2.second.cend());
 }
 
@@ -33,59 +36,77 @@ inline bool wrapper_lexicographical_compare_1(const pair<int, string>& s1, const
 #define MAX_OUT_BUFFER_SIZE 2
 
 /*************/
-struct mmap_info{
+struct MMapReader{  //for read purpose only
+public:
+
+    ~MMapReader(){
+        munmap(beginPos, size);
+        close(fd);
+        if (isTmpfile){
+            remove(fileName.c_str());
+        }
+        //cout<<"Remove "<<fileName<<endl;
+    }
+
+    void MMapOpen(const string& openfileName, bool isInputTmpfile = false, int size = -1){
+        isTmpfile = isInputTmpfile;
+        fileName = openfileName;
+        // flag: https://man7.org/linux/man-pages/man2/open.2.html
+        fd = open(fileName.c_str(), O_RDONLY);
+        if (fd == -1) {
+            cout<<"Can't open file descriptor of "<<fileName<<endl;
+            terminate();
+        }
+
+        /* Advise the kernel of our access pattern.  */
+        //posix_fadvise(fd, 0, 0, 1);  // FDADVICE_SEQUENTIAL
+
+        if (size < 0){
+            struct stat st;
+            fstat(fd, &st);
+            size = st.st_size;
+        }
+        size = size;
+
+        beginPos = (char*) mmap(0, size, PROT_READ, MAP_SHARED, fd, 0);
+        
+        if (beginPos == MAP_FAILED) {
+            close(fd);
+            cout<<"Can't open mmap of "<<fileName<<endl;
+            terminate();
+        }
+        endPos = beginPos + size;
+        currentPos = beginPos;
+
+        //madvise(beginPos, size, MADV_SEQUENTIAL);
+    }
+
+    inline char* Readline(int& length){
+        char* find_pos = (char*) memchr(currentPos, '\n', endPos - currentPos);
+        char* endline_pos = find_pos ? find_pos+1 : endPos;
+        length = endline_pos - currentPos;
+        char *p = currentPos;
+        currentPos = find_pos ? find_pos+1:NULL;
+        return p;
+    }
+
+    bool Valid() const {
+        return currentPos != NULL;
+    }
+private:
+    string fileName;
     int fd;
     char* beginPos;
     char* endPos;
     char* currentPos;
     off_t size;
+    bool isTmpfile;
 };
 
-bool open_mmap(mmap_info &info, const std::string& fileName, int flag, off_t size = -1){
-    // flag: https://man7.org/linux/man-pages/man2/open.2.html
-    info.fd = open(fileName.c_str(), flag);
-    if (info.fd == -1) {
-        cout<<"Can't open file descriptor of"<<fileName<<endl;
-        return false;
-    }
 
-    /* Advise the kernel of our access pattern.  */
-    //posix_fadvise(info.fd, 0, 0, 1);  // FDADVICE_SEQUENTIAL
-
-    if (size < 0){
-        struct stat st;
-        fstat(info.fd, &st);
-        size = st.st_size;
-    }
-    info.size = size;
-
-    info.beginPos = (char*) mmap(0, info.size, PROT_READ, MAP_SHARED, info.fd, 0);
-    
-    if (info.beginPos == MAP_FAILED) {
-        close(info.fd);
-        cout<<"Can't open mmap of"<<fileName<<endl;
-        return false;
-    }
-    info.endPos = info.beginPos + info.size;
-    info.currentPos = info.beginPos;
-
-    //madvise(info.beginPos, info.size, MADV_SEQUENTIAL);
-
-    return true;
-}
-
-void close_mmap(const mmap_info &info){
-    munmap(info.beginPos, info.size);
-    close(info.fd);
-}
-
-inline char* readline_mmap(mmap_info &info, int& length){
-    char* find_pos = (char*) memchr(info.currentPos, '\n', info.endPos - info.currentPos);
-    char* endline_pos = find_pos ? find_pos+1 : info.endPos;
-    length = endline_pos - info.currentPos;
-    char *p = info.currentPos;
-    info.currentPos = find_pos ? find_pos+1:NULL;
-    return p;
+//utility function
+string GetTmpFile(string prefixTmpFile, int runNumber){
+    return prefixTmpFile + "_" + to_string(runNumber);
 }
 
 std::deque<vector<string>> inBuffer;
@@ -96,24 +117,28 @@ std::condition_variable in_cv;
 std::condition_variable out_cv;
 bool reader_finished = false;
 bool sorter_finished = false;
+bool merger_finished = false;
 
 void FileReader(const string& inputFile, long heapMemLimit){
-    mmap_info mmapInput;
-    open_mmap(mmapInput, inputFile, O_RDONLY);
+    MMapReader mmapInput;
+
+    mmapInput.MMapOpen(inputFile);
 
     long maxBatchSize = heapMemLimit/(2*MAX_IN_BUFFER_SIZE+2);
     int lines = 0;
-    while (mmapInput.currentPos){
+    long FileReader_size = 0;
+    while (mmapInput.Valid()){
         vector<string> buffer;
         long heapMemConsume = 0;
 
         //Load
-        while (mmapInput.currentPos && heapMemConsume < maxBatchSize){
+        while (mmapInput.Valid() && heapMemConsume < maxBatchSize){
             int length = 0;
-            char* p = readline_mmap(mmapInput, length);
+            char* p = mmapInput.Readline(length);
             heapMemConsume += length;
             buffer.push_back(string(p, length));
             lines++;
+            FileReader_size += length;
         }
         //cout<<buffer.back();
 
@@ -122,17 +147,17 @@ void FileReader(const string& inputFile, long heapMemLimit){
             //When the queue is full, it returns false, it has been blocked in this line
             in_cv.wait(in_lock, [] {return inBuffer.size() < MAX_IN_BUFFER_SIZE; });
             inBuffer.push_front(move(buffer));
-            reader_finished = mmapInput.currentPos ? false : true;
+            reader_finished = mmapInput.Valid() ? false : true;
         }
         in_cv.notify_one();
     }
-    close_mmap(mmapInput);
-    //cout<<"FileReader Finished lines = "<<lines<<endl;
+    cout<<"FileReader Finished, lines = "<<lines<<" FileReader_size = "<<FileReader_size<<endl;
 }
 
 void Sorter(){
     int numLine = 0;
     bool isDone = false;
+    long Sorter_size = 0;
     while (!isDone) {
         vector<string> buffer;
         {
@@ -155,17 +180,19 @@ void Sorter(){
             std::unique_lock<std::mutex> out_lock(out_mutex);
             //When the queue is full, it returns false, it has been blocked in this line
             out_cv.wait(out_lock, [] {return outBuffer.size() < MAX_OUT_BUFFER_SIZE; });
+            Sorter_size += tmp.size();
             outBuffer.push_front(move(tmp));
             sorter_finished = isDone;
         }
         out_cv.notify_one();
     }
-    //cout<<"Sorter Finished, numline = "<<numLine<<endl;
+    cout<<"Sorter Finished, numline = "<<numLine<<" Sorter_size = "<<Sorter_size<<endl;
 }
 
-void FileWriter(const string& inputFile, int& numRun){
+void FileWriter(const string& outputFile, int& numRun){
     bool isDone = false;
     numRun = 0;
+    long FileWriter_size = 0;
     while(!isDone) {
         string buffer;
         {
@@ -174,24 +201,29 @@ void FileWriter(const string& inputFile, int& numRun){
             out_cv.wait(out_lock, [] {return !outBuffer.empty(); });
             swap(buffer, outBuffer.back());
             outBuffer.pop_back();
-            isDone = (sorter_finished && (outBuffer.size() == 0));
+            isDone = (sorter_finished && outBuffer.empty());
         }
         out_cv.notify_one();
         //Store
         FILE * pFile;
-        pFile = fopen ((inputFile + "_0_" + to_string(numRun)).c_str(), "wb");
+        pFile = fopen (GetTmpFile(outputFile, numRun).c_str(), "wb+");
+        if (pFile == NULL){
+            cout<<"Can't open "<<outputFile<<" to write"<<endl;
+        }
+        FileWriter_size += buffer.size();
         fwrite (buffer.c_str() , sizeof(char), buffer.size(), pFile);
         fclose (pFile);
         numRun++;
     }
+    cout<<"FileWriter Finished, FileWriter_size = "<<FileWriter_size<<endl;
 }
 
-int InitialPhase(const string& inputFile, long heapMemLimit){
+int InitialPhase(const string& inputFile, const string& prefixTmpFile, long heapMemLimit){
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     int numRun = 0;
     std::thread t1(FileReader, inputFile, heapMemLimit);
 	std::thread t2(Sorter);
-    std::thread t3(FileWriter, inputFile, std::ref(numRun));
+    std::thread t3(FileWriter, prefixTmpFile, std::ref(numRun));
 	t1.join();
 	t2.join();
     t3.join();
@@ -202,111 +234,110 @@ int InitialPhase(const string& inputFile, long heapMemLimit){
     return numRun;
 }
 
-queue<string> meregedOutBuffer;
-bool merger_finished = false;
-
 void MergedFileWriter(const string& outputFile){
     //int block_size = 4096;
     bool isDone = false;
     string buffer;
     FILE * pFile;
-    pFile = fopen (outputFile.c_str(), "wb");
-
+    pFile = fopen (outputFile.c_str(), "wb+");
+    if (pFile == NULL){
+        cout<<"Can't open "<<outputFile<<" to write"<<endl;
+    }
+    long MergedFileWriter_size = 0;
     while(!isDone) {
         {
             std::unique_lock<std::mutex> out_lock(out_mutex);
             //When the queue is full, it returns false, it has been blocked in this line
-            out_cv.wait(out_lock, [] {return !meregedOutBuffer.empty(); });
-            swap(buffer, meregedOutBuffer.back());
-            meregedOutBuffer.pop();
-            isDone = (merger_finished && meregedOutBuffer.empty());
+            out_cv.wait(out_lock, [] {return !outBuffer.empty(); });
+            buffer = outBuffer.back();
+            outBuffer.pop_back();
+            isDone = (merger_finished && outBuffer.empty());
         }
         out_cv.notify_one();
+        MergedFileWriter_size += buffer.size();
         fwrite (buffer.c_str() , sizeof(char), buffer.size(), pFile);
     }
     fclose (pFile);
-    //cout<<"MergedFileWriter Finished"<<endl;
+    cout<<"MergedFileWriter Finished, MergedFileWriter_size = "<<MergedFileWriter_size<<endl;
 }
 
 // Merge k files:  ${inputFile}_${step}_${base} -> ${inputFile}_${step}_${base + k}
-void KWayMerged(int k, int base, const string& inputFile, long heapMemLimit){
+void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit){
     //vector<string> outBuffer;
-    vector<mmap_info> mmapInfos(k);
+    //cout<<__FUNCTION__<<":"<<__LINE__<<endl;
+    vector<MMapReader> kWayReaders(k);
+    //cout<<__FUNCTION__<<":"<<__LINE__<<endl;
     vector<pair<int, string>> heapLines(k);
+    long KWayMerged_size = 0;
+    int lines = 0;
+    //cout<<__FUNCTION__<<":"<<__LINE__<<endl;
     for (int i = 0; i < k; i++){
-        open_mmap(mmapInfos[i], inputFile + "_" + to_string(i + base), O_RDONLY);
-
+        kWayReaders[i].MMapOpen(GetTmpFile(prefixTmpFile, i + base), true);
         int length = 0;
-        char* p = readline_mmap(mmapInfos[i], length);
+        char* p = kWayReaders[i].Readline(length);
         heapLines[i] = {i, string(p, length)}; // copy to buffer
     }
-
+    //cout<<__FUNCTION__<<":"<<__LINE__<<endl;
     std::make_heap (heapLines.begin(),heapLines.end(), wrapper_lexicographical_compare_1);
     string buffer;
     buffer.reserve(heapMemLimit/3);
     while(heapLines.size()) {
         std::pop_heap(heapLines.begin(),heapLines.end(), wrapper_lexicographical_compare_1);
-        int mmapIdx = heapLines.back().first;
-        buffer += string(move(heapLines.back().second));
+        int outWayIdx = heapLines.back().first;
+        buffer += heapLines.back().second;
+        lines++;
         heapLines.pop_back();
         
-        if (mmapInfos[mmapIdx].currentPos) {
+        if (kWayReaders[outWayIdx].Valid()) {
             int length = 0;
-            char* p = readline_mmap(mmapInfos[mmapIdx], length);
-            heapLines.push_back({mmapIdx, string(p, length)}); // copy to buffer
+            char* p = kWayReaders[outWayIdx].Readline(length);
+            heapLines.push_back({outWayIdx, string(p, length)}); // copy to buffer
             std::push_heap (heapLines.begin(), heapLines.end(), wrapper_lexicographical_compare_1);
-        } else{
-            close_mmap(mmapInfos[mmapIdx]);
-            //remove temp file
-            remove((inputFile + "_" + to_string(mmapIdx + base)).c_str());
         }
+
 
         if (buffer.size() > heapMemLimit/3 || heapLines.empty()) {
             {
                 std::unique_lock<std::mutex> out_lock(out_mutex);
                 //When the queue is full, it returns false, it has been blocked in this line
-                out_cv.wait(out_lock, [] {return meregedOutBuffer.size() < MAX_OUT_BUFFER_SIZE; });
+                out_cv.wait(out_lock, [] {return outBuffer.size() < MAX_OUT_BUFFER_SIZE; });
                 // Block in here
-                meregedOutBuffer.push(buffer);
+                KWayMerged_size += buffer.size();
+                outBuffer.push_front(move(buffer));
                 buffer.clear();
                 merger_finished = heapLines.empty();
             }
             out_cv.notify_one();
         }
     }
-    //cout<<"KWayMerged Finished"<<endl;
+    cout<<"KWayMerged Finished, lines = "<<lines<<" KWayMerged_size = "<<KWayMerged_size<<endl;
 }
 
-void MergedPhase(const string& inputFile, const string& outputFile, int numRun, long heapMemLimit){
+void MergedPhase(const string& prefixTmpFile, const string& outputFile, int numInitialRun, long heapMemLimit){
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    int step = 0;
-    int base = 0;
-    int numRunStep = 0; // number run at this step
-    string outputMergedFile;
-    while (numRun > 1){
-        int k = numRun - base > 100 ? 100 : numRun - base; //To do
-        if (k < numRun){
-            outputMergedFile = inputFile + "_" + to_string(step+1) + "_" + to_string(numRunStep);
-        } else {
-            outputMergedFile = outputFile;
+    if (numInitialRun == 1) {
+        if (rename(GetTmpFile(prefixTmpFile, 0).c_str(), outputFile.c_str()) != 0) {
+            cout<<"Can't output file, temp output file was located at "<<GetTmpFile(outputFile, 0)<<endl;
         }
+        return;
+    }
 
-        //cout<<outputMergedFile<<" k = "<<k<<" step = "<<step<<" base = "<<base<<endl;
-
-        std::thread t1(KWayMerged, k, base, inputFile + "_" + to_string(step), heapMemLimit);
-        std::thread t2(MergedFileWriter, outputMergedFile);
+    int base = 0;
+    int runNum = numInitialRun;
+    int numRemainRun = numInitialRun;
+    while (numRemainRun > 1){
+        int k = numRemainRun < 10 ? numRemainRun : 10; //To do
+        numRemainRun = numRemainRun - k + 1;
+        string actualOutputFile = numRemainRun == 1? outputFile : GetTmpFile(prefixTmpFile, runNum);
+        std::thread t1(KWayMerged, k, base, outputFile , heapMemLimit);
+        std::thread t2(MergedFileWriter, actualOutputFile);
         t1.join();
         t2.join();
-        queue<string>().swap(meregedOutBuffer);
+        deque<string>().swap(outBuffer);
         base += k;
-        numRunStep++;
-        if (base >= numRun){
-            base = 0;
-            numRun = numRunStep;
-            numRunStep = 0;
-            step++;
-        }
+        runNum++;
     }
+
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     std::cout << "MergedPhase Elapsed time = " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << "[s]" << std::endl;
 }
@@ -327,12 +358,13 @@ int main(int argc, char **argv)
     long memLimitSize = atol(argv[3]);
     ifstream inF(inputFile, ifstream::in);
     
+    string prefixTmpFile = outputFile;
     //Initial phase
-    int numRun = InitialPhase(inputFile, memLimitSize);
+    int numRun = InitialPhase(inputFile, prefixTmpFile, memLimitSize);
     std::cout << "InitialPhase numRun =  "<<numRun<<std::endl;
 
     //Merged phase
-    MergedPhase(inputFile, outputFile, numRun, memLimitSize);
+    MergedPhase(prefixTmpFile, outputFile, numRun, memLimitSize);
 
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     std::cout << "Elapsed time = " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << "[s]" << std::endl;
