@@ -1,2 +1,2 @@
 #!/bin/sh
-g++ -g --std=c++11 -pthread main.cpp -o main.out
+g++ -g --std=c++17 -Wall -pthread main.cpp -o main.out

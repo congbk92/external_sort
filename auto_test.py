@@ -24,9 +24,9 @@ def lexicographical_sort_lile(input_file, output_file):
 
 if __name__ == "__main__":
     dirname = os.path.dirname(os.path.realpath(__file__))
-    intput_file = os.path.join(dirname, "testcase", "world192.txt")
-    actual_file = os.path.join(dirname, "testcase", "world192_out.txt")
-    expected_file = os.path.join(dirname, "testcase", "world192_expected.txt")
+    intput_file = os.path.join(dirname, "testcase", "world192_100.txt")
+    actual_file = os.path.join(dirname, "testcase", "world192_100_out.txt")
+    expected_file = os.path.join(dirname, "testcase", "world192_100_expected.txt")
     lexicographical_sort_lile(intput_file, expected_file)
     if md5(expected_file) == md5(actual_file):
         print(True)
