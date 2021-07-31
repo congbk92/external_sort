@@ -3,7 +3,6 @@
 #include <vector>
 #include <fstream>
 #include <string>
-#include <future>
 #include <chrono>
 #include <thread>
 #include <deque>
@@ -34,72 +33,15 @@ inline bool wrapper_lexicographical_compare_1(const pair<int, string>& s1, const
 #define MAX_OUT_BUFFER_SIZE 2
 
 /*************/
-class HeapMemoryManager{
-    
-};
-
-class KwaysMergeManager{
-public:
-    KwaysMergeManager(int k, int heapMemForMergeRead, int batch_size) :
-        kWays(k),
-        currentBufSize(0),
-        heapMemForMergeRead(heapMemForMergeRead),
-        batch_size(batch_size){
-            bufSizeKways.resize(k,0);
-        }
-    
-    void AddToBuffer(int add_size, int add_idx){
-        currentBufSize += add_size;
-        bufSizeKways[add_idx] += add_size;
-    }
-
-    void RemoveFromBuffer(int remove_size, int add_idx){
-        currentBufSize -= remove_size;
-        bufSizeKways[add_idx] -= remove_size;
-    }
-
-    int getShortestBufIdx() const{
-        return min_element(bufSizeKways.begin(), bufSizeKways.end()) - bufSizeKways.begin();
-    }
-
-    int getSumBufSize() const {
-        return currentBufSize;
-    }
-
-    bool shouldPreload() const {
-        return heapMemForMergeRead - currentBufSize >= batch_size;
-    }
-
-private:
-    int kWays;
-    int currentBufSize; // size all buffer;
-    int heapMemForMergeRead;
-    int batch_size;
-    vector<int> bufSizeKways; // store size of Kth's buffer
-};
-
 struct mmap_info{
     int fd;
     char* beginPos;
     char* endPos;
     char* currentPos;
     off_t size;
-    string filename;
-
-    mmap_info(){
-
-    }
-
-    ~mmap_info(){
-        //cout<<"delete "<<filename<<endl;
-        if (currentPos != NULL){
-            cout<<filename<<" wasn't complete"<<endl;
-        }
-    }
 };
 
 bool open_mmap(mmap_info &info, const std::string& fileName, int flag, off_t size = -1){
-    info.filename = fileName;
     // flag: https://man7.org/linux/man-pages/man2/open.2.html
     info.fd = open(fileName.c_str(), flag);
     if (info.fd == -1) {
@@ -146,21 +88,19 @@ inline char* readline_mmap(mmap_info &info, int& length){
     return p;
 }
 
-inline int readlines_mmap(mmap_info &info, vector<string>& lines, int batch_size){
+inline void readlines_mmap(mmap_info &info, vector<string>& lines, int batch_size){
     lines.clear();
     char *p = NULL;
-    int out_size = 0;
-    while (batch_size > out_size && info.currentPos)
-    {  
+    while (batch_size > 0 && info.currentPos)
+    {
         char* find_pos = (char*) memchr(info.currentPos, '\n', info.endPos - info.currentPos);
         char* endline_pos = find_pos ? find_pos+1 : info.endPos;
         int length = endline_pos - info.currentPos;
-        out_size += length;
+        batch_size -= length;
         char *p = info.currentPos;
         info.currentPos = find_pos ? find_pos+1:NULL;
         lines.emplace_back(string(p, length));
     }
-    return out_size;
 }
 
 std::deque<vector<string>> inBuffer;
@@ -202,7 +142,7 @@ void FileReader(const string& inputFile, long heapMemLimit){
         in_cv.notify_one();
     }
     close_mmap(mmapInput);
-    cout<<"FileReader Finished lines = "<<lines<<endl;
+    //cout<<"FileReader Finished lines = "<<lines<<endl;
 }
 
 void Sorter(){
@@ -235,7 +175,7 @@ void Sorter(){
         }
         out_cv.notify_one();
     }
-    cout<<"Sorter Finished, numline = "<<numLine<<endl;
+    //cout<<"Sorter Finished, numline = "<<numLine<<endl;
 }
 
 void FileWriter(const string& inputFile, int& numRun){
@@ -247,7 +187,7 @@ void FileWriter(const string& inputFile, int& numRun){
             std::unique_lock<std::mutex> out_lock(out_mutex);
             //When the queue is full, it returns false, it has been blocked in this line
             out_cv.wait(out_lock, [] {return !outBuffer.empty(); });
-            buffer = outBuffer.back();
+            swap(buffer, outBuffer.back());
             outBuffer.pop_back();
             isDone = (sorter_finished && (outBuffer.size() == 0));
         }
@@ -270,9 +210,6 @@ int InitialPhase(const string& inputFile, long heapMemLimit){
 	t1.join();
 	t2.join();
     t3.join();
-    cout<<"inBuffer size = "<<inBuffer.size()<<endl;
-    cout<<"outBuffer size = "<<outBuffer.size()<<endl;
-
     std::deque<vector<string>>().swap(inBuffer);
     std::deque<string>().swap(outBuffer);
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
@@ -302,7 +239,7 @@ void MergedFileWriter(const string& outputFile, int heapMemLimit){
             std::unique_lock<std::mutex> out_lock(out_mutex);
             //When the queue is full, it returns false, it has been blocked in this line
             out_cv.wait(out_lock, [] {return !meregedOutBuffer.empty(); });
-            tmp_str = meregedOutBuffer.back();
+            swap(tmp_str, meregedOutBuffer.back());
             meregedOutBuffer.pop();
             isDone = (merger_finished && meregedOutBuffer.empty());
         }
@@ -336,33 +273,18 @@ void KWayMerged(int k, int base, const string& inputFile, long heapMemLimit){
     //vector<string> outBuffer;
     vector<mmap_info> mmapInfos(k);
     vector<pair<int, string>> heapLines(k);
-    vector<vector<string>> linesBuffer(k);
+    vector<vector<string>> linesBuffer(k); 
     int block_size = getpagesize();
     int batch_size = (heapMemLimit/2/(k+1)/block_size)*block_size;
     batch_size = batch_size > block_size ? batch_size : block_size;
     int out_buffer_size =(heapMemLimit/2/(MAX_OUT_BUFFER_SIZE+2)/block_size)*block_size;
     out_buffer_size = out_buffer_size > block_size ? out_buffer_size : block_size;
-    KwaysMergeManager mergeMgr(k, heapMemLimit/2, batch_size);
-    
-    vector<string> futBuf;
-    futBuf.reserve(batch_size);
-    pair<int,future<int>> fut;
-
-    //cout<<__FUNCTION__<<":"<<__LINE__<<endl;
     for (int i = 0; i < k; i++){
-        //cout<<__FUNCTION__<<":"<<__LINE__<<" i = "<<i<<endl;
         open_mmap(mmapInfos[i], inputFile + "_" + to_string(i + base), O_RDONLY);
-        //cout<<__FUNCTION__<<":"<<__LINE__<<" i = "<<i<<endl;
-        int out_size = readlines_mmap(mmapInfos[i], linesBuffer[i], batch_size);
-        //cout<<__FUNCTION__<<":"<<__LINE__<<" i = "<<i<<" out_size"<<out_size<<" batch_size="<<batch_size<<endl;
+        readlines_mmap(mmapInfos[i], linesBuffer[i], batch_size);
         heapLines[i] = {i, move(linesBuffer[i].back())}; // copy to buffer
-        //cout<<__FUNCTION__<<":"<<__LINE__<<" i = "<<i<<endl;
         linesBuffer[i].pop_back();
-        //cout<<__FUNCTION__<<":"<<__LINE__<<" i = "<<i<<endl;
-        mergeMgr.AddToBuffer(out_size, i);
     }
-
-    //cout<<__FUNCTION__<<":"<<__LINE__<<endl;
 
     std::make_heap (heapLines.begin(),heapLines.end(), wrapper_lexicographical_compare_1);
     string buffer;
@@ -372,47 +294,21 @@ void KWayMerged(int k, int base, const string& inputFile, long heapMemLimit){
         int mmapIdx = heapLines.back().first;
         buffer += heapLines.back().second;
         heapLines.pop_back();
-
-        //Update buffer
-        if (linesBuffer[mmapIdx].size() == 0) {
-            /*if(fut.first == mmapIdx && fut.second.valid()){
-                // shouldn't go to this
-                fut.second.wait();
-                int out_size = fut.second.get();
-                linesBuffer[fut.first].insert(linesBuffer[fut.first].begin(), futBuf.begin(), futBuf.end());
-                mergeMgr.AddToBuffer(out_size, fut.first);
-            }else */if (mmapInfos[mmapIdx].currentPos) {
-                // shouldn't go to this
-                int out_size = readlines_mmap(mmapInfos[mmapIdx], linesBuffer[mmapIdx], batch_size);
-                mergeMgr.AddToBuffer(out_size, mmapIdx);
-            } else{
-                close_mmap(mmapInfos[mmapIdx]);
-                remove((inputFile + "_" + to_string(mmapIdx + base)).c_str());
-            }
-        }
-
-        //Load from buf to heap
+        
         if (linesBuffer[mmapIdx].size() > 0){
-            mergeMgr.RemoveFromBuffer(linesBuffer[mmapIdx].back().size(), mmapIdx);
             heapLines.push_back({mmapIdx, move(linesBuffer[mmapIdx].back())}); // copy to buffer
-            std::push_heap (heapLines.begin(), heapLines.end(), wrapper_lexicographical_compare_1);
             linesBuffer[mmapIdx].pop_back();
+            std::push_heap (heapLines.begin(), heapLines.end(), wrapper_lexicographical_compare_1);
+        } else if (mmapInfos[mmapIdx].currentPos) {
+            readlines_mmap(mmapInfos[mmapIdx], linesBuffer[mmapIdx], batch_size);
+            heapLines.push_back({mmapIdx, move(linesBuffer[mmapIdx].back())}); // copy to buffer
+            linesBuffer[mmapIdx].pop_back();
+            std::push_heap (heapLines.begin(), heapLines.end(), wrapper_lexicographical_compare_1);
+        } else{
+            close_mmap(mmapInfos[mmapIdx]);
+            //remove temp file
+            remove((inputFile + "_" + to_string(mmapIdx + base)).c_str());
         }
-        /*
-        //Pre-load
-        if (mergeMgr.shouldPreload()){
-            if (fut.second.valid() && fut.second.wait_for(std::chrono::seconds(0)) == std::future_status::ready){
-                int out_size = fut.second.get();
-                linesBuffer[fut.first].insert(linesBuffer[fut.first].begin(), futBuf.begin(), futBuf.end());
-                mergeMgr.AddToBuffer(out_size, fut.first);
-            }
-            //Call async
-            int idxShortestBuf = mergeMgr.getShortestBufIdx();
-            if (!fut.second.valid() && mmapInfos[idxShortestBuf].currentPos){
-                fut.first = idxShortestBuf;
-                fut.second = async(launch::async ,readlines_mmap, ref(mmapInfos[idxShortestBuf]), ref(futBuf), batch_size);
-            }
-        }*/
 
         if (buffer.size() > out_buffer_size || heapLines.empty()) {
             {
@@ -437,21 +333,19 @@ void MergedPhase(const string& inputFile, const string& outputFile, int numRun, 
     int numRunStep = 0; // number run at this step
     string outputMergedFile;
     while (numRun > 1){
-        int k = numRun - base > 200 ? 200 : numRun - base; //To do
+        int k = numRun - base > 50 ? 50 : numRun - base; //To do
         if (k < numRun){
             outputMergedFile = inputFile + "_" + to_string(step+1) + "_" + to_string(numRunStep);
         } else {
             outputMergedFile = outputFile;
         }
 
-        string inputFileMergedFile = inputFile + "_" + to_string(step);
-        cout<<inputFileMergedFile<<" "<<outputMergedFile<<" k = "<<k<<" step = "<<step<<" base = "<<base<<endl;
+        //cout<<outputMergedFile<<" k = "<<k<<" step = "<<step<<" base = "<<base<<endl;
 
-        std::thread t1(KWayMerged, k, base, inputFileMergedFile, heapMemLimit);
+        std::thread t1(KWayMerged, k, base, inputFile + "_" + to_string(step), heapMemLimit);
         std::thread t2(MergedFileWriter, outputMergedFile, heapMemLimit);
         t1.join();
         t2.join();
-        cout<<"meregedOutBuffer size = "<<meregedOutBuffer.size()<<endl;
         queue<string>().swap(meregedOutBuffer);
         base += k;
         numRunStep++;
