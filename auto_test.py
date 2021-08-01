@@ -31,8 +31,8 @@ if __name__ == "__main__":
     md5_expected = md5(expected_file)
     #md5_expected = md5(intput_file)
     
-    #shellscript = subprocess.Popen(["/home/mypc/repo/external_sort/build.sh"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    #tdout, stderr = shellscript.communicate()
+    shellscript = subprocess.Popen(["/home/mypc/repo/external_sort/build.sh"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = shellscript.communicate()
 
     for i in range (0,50):
         print(i)

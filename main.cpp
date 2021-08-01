@@ -128,6 +128,7 @@ class MergeManager {  // This class help to manage buffer of merger to preload d
 public:
     MergeManager(int k, int heapMemForMergeRead, int batch_size) :
         kWays(k),
+        preserveSize(0),
         currentBufSize(0),
         heapMemForMergeRead(heapMemForMergeRead),
         batch_size(batch_size){
@@ -161,12 +162,21 @@ public:
     }
 
     bool ShouldPreload() const {
-        return heapMemForMergeRead - currentBufSize >= batch_size;
+        return heapMemForMergeRead - currentBufSize - preserveSize >= batch_size;
+    }
+
+    void Preserve(){
+        preserveSize += batch_size;
+    }
+
+    void Serve(){
+        preserveSize -= batch_size;
     }
 
 
 private:
     int kWays;
+    int preserveSize; 
     int currentBufSize; // size all buffer;
     int heapMemForMergeRead;
     int batch_size;
@@ -179,13 +189,11 @@ string GetTmpFile(string prefixTmpFile, int runNumber){
 }
 
 inline bool wrapper_lexicographical_compare(const string& s1, const string& s2){
-    //return atoi(s1.c_str()) < atoi(s2.c_str());
     return lexicographical_compare(s1.cbegin(), s1.cend(), s2.cbegin(), s2.cend());
 }
 
 inline bool wrapper_lexicographical_compare_1(const pair<int, string>& s1, const pair<int, string>& s2){
-    //return atoi(s1.second.c_str()) > atoi(s2.second.c_str());
-    return !lexicographical_compare(s1.second.cbegin(), s1.second.cend(), s2.second.cbegin(), s2.second.cend());
+    return lexicographical_compare(s2.second.cbegin(), s2.second.cend(), s1.second.cbegin(), s1.second.cend());
 }
 /*-------------------------------------*/
 
@@ -345,6 +353,7 @@ void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit)
     int out_buffer_size =(heapMemLimit/2/(MAX_OUT_BUFFER_SIZE+2)/block_size)*block_size;
     out_buffer_size = out_buffer_size > block_size ? out_buffer_size : block_size;
     
+    cout<<"batch_size = "<<batch_size<<" out_buffer_size = "<<out_buffer_size<<endl;
     MergeManager mergeMgr(k, heapMemLimit/2, batch_size);
 
     long KWayMerged_size = 0;
@@ -360,7 +369,7 @@ void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit)
 
     std::make_heap (heapLines.begin(),heapLines.end(), wrapper_lexicographical_compare_1);
     string buffer;
-    buffer.reserve(heapMemLimit/3);
+    buffer.reserve(out_buffer_size);
     int pre_loaded_run = 0;
     int pre_loaded_done = 0;
     int not_pre_loaded = 0;
@@ -380,6 +389,7 @@ void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit)
                 for (auto &x : futBuf) readedLength += x.size();
                 linesBuffer[outWayIdx].swap(futBuf);
                 mergeMgr.AddToBuffer(readedLength, outWayIdx);
+                mergeMgr.Serve();
                 pre_loaded_run++;
             } else if (kWayReaders[outWayIdx].IsValid()){
                 int readedLength = kWayReaders[outWayIdx].ReadSortedlines(linesBuffer[outWayIdx], batch_size);
@@ -403,6 +413,7 @@ void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit)
                 for (auto &x : futBuf) readedLength += x.size();
                 linesBuffer[fut.first].insert(linesBuffer[fut.first].end(), futBuf.begin(), futBuf.end());
                 mergeMgr.AddToBuffer(readedLength, fut.first);
+                mergeMgr.Serve();
                 pre_loaded_done++;
             }
             //Call async
@@ -410,6 +421,7 @@ void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit)
             if (!fut.second.valid() && idxShortestBuf >= 0 && idxShortestBuf < k){
                 fut.first = idxShortestBuf;
                 fut.second = async(launch::async, &MMapReader::ReadSortedlinesAsync, &kWayReaders[idxShortestBuf], batch_size);
+                mergeMgr.Preserve();
             }
         }
 
@@ -446,7 +458,7 @@ void MergedPhase(const string& prefixTmpFile, const string& outputFile, int numI
     int runNum = numInitialRun;
     int numRemainRun = numInitialRun;
     while (numRemainRun > 1){
-        int k = numRemainRun < 50 ? numRemainRun : 50; //To do
+        int k = numRemainRun < 200 ? numRemainRun : 200; //To do
         numRemainRun = numRemainRun - k + 1;
         string actualOutputFile = numRemainRun == 1? outputFile : GetTmpFile(prefixTmpFile, runNum);
         std::thread t1(KWayMerged, k, base, outputFile , heapMemLimit);
