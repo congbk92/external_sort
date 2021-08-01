@@ -24,9 +24,9 @@ def lexicographical_sort_lile(input_file, output_file):
 
 if __name__ == "__main__":
     dirname = os.path.dirname(os.path.realpath(__file__))
-    intput_file = os.path.join(dirname, "testcase", "world192.txt")
-    actual_file = os.path.join(dirname, "testcase", "world192_out.txt")
-    expected_file = os.path.join(dirname, "testcase", "world192_expected.txt")
+    intput_file = os.path.join(dirname, "testcase", "world192_100.txt")
+    actual_file = os.path.join(dirname, "testcase", "world192_100_out.txt")
+    expected_file = os.path.join(dirname, "testcase", "world192_100_expected.txt")
     lexicographical_sort_lile(intput_file, expected_file)
     md5_expected = md5(expected_file)
     #md5_expected = md5(intput_file)
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     #shellscript = subprocess.Popen(["/home/mypc/repo/external_sort/build.sh"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     #tdout, stderr = shellscript.communicate()
 
-    for i in range (0,1000):
+    for i in range (0,50):
         print(i)
         shellscript = subprocess.Popen(["/home/mypc/repo/external_sort/run.sh"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         stdout, stderr = shellscript.communicate()   # blocks until shellscript is done

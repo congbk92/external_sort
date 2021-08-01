@@ -9,6 +9,8 @@
 #include <queue>
 #include <condition_variable>
 #include <cstdio>
+#include <future>
+#include <climits>
 
 // for mmap
 #include <sys/stat.h>
@@ -72,16 +74,44 @@ public:
         //madvise(beginPos, size, MADV_SEQUENTIAL);
     }
 
-    inline char* Readline(int& length){
+    string Readline(){
         char* find_pos = (char*) memchr(currentPos, '\n', endPos - currentPos);
         char* endline_pos = find_pos ? find_pos+1 : endPos;
-        length = endline_pos - currentPos;
+        int length = endline_pos - currentPos;
         char *p = currentPos;
         currentPos = find_pos ? find_pos+1:NULL;
-        return p;
+        return string(p,length);
     }
 
-    bool Valid() const {
+    int Readlines(vector<string>& lines, int batch_size){
+        int readedLength = 0;
+        while (readedLength < batch_size && IsValid()){
+            lines.push_back(Readline());
+            readedLength += lines.back().length();
+        }
+        return readedLength;
+    }
+
+    int ReadSortedlines(deque<string>& lines, int batch_size){
+        int readedLength = 0;
+        while (readedLength < batch_size && IsValid()){
+            lines.push_back(Readline());
+            readedLength += lines.back().length();
+        }
+        return readedLength;
+    }
+
+    deque<string> ReadSortedlinesAsync(int batch_size){
+        deque<string> lines;
+        int readedLength = 0;
+        while (readedLength < batch_size && IsValid()){
+            lines.push_back(Readline());
+            readedLength += lines.back().length();
+        }
+        return lines;
+    }
+
+    bool IsValid() const {
         return currentPos != NULL;
     }
 private:
@@ -114,17 +144,26 @@ public:
         bufSizeKways[add_idx] -= remove_size;
     }
 
-    int getShortestBufIdx() const{
-        return min_element(bufSizeKways.begin(), bufSizeKways.end()) - bufSizeKways.begin();
+    int GetShortestBufIdx(const vector<MMapReader> &kWayReaders) const{
+        int min_element = INT_MAX;
+        int min_idx = -1;
+        for (int i = 0; i < static_cast<int>(bufSizeKways.size()); i++){
+            if (bufSizeKways[i] < min_element && kWayReaders[i].IsValid()){
+                min_element = bufSizeKways[i];
+                min_idx = i;
+            }
+        }
+        return min_idx;
     }
 
-    int getSumBufSize() const {
+    int GetSumBufSize() const {
         return currentBufSize;
     }
 
-    bool shouldPreload() const {
+    bool ShouldPreload() const {
         return heapMemForMergeRead - currentBufSize >= batch_size;
     }
+
 
 private:
     int kWays;
@@ -168,27 +207,18 @@ void FileReader(const string& inputFile, long heapMemLimit){
     long maxBatchSize = heapMemLimit/(2*MAX_IN_BUFFER_SIZE+2);
     int lines = 0;
     long FileReader_size = 0;
-    while (mmapInput.Valid()){
+    while (mmapInput.IsValid()){
         vector<string> buffer;
-        long heapMemConsume = 0;
-
         //Load
-        while (mmapInput.Valid() && heapMemConsume < maxBatchSize){
-            int length = 0;
-            char* p = mmapInput.Readline(length);
-            heapMemConsume += length;
-            buffer.push_back(string(p, length));
-            lines++;
-            FileReader_size += length;
-        }
-        //cout<<buffer.back();
+        FileReader_size += mmapInput.Readlines(buffer, maxBatchSize);
+        lines += buffer.size();
 
         {
             std::unique_lock<std::mutex> in_lock(in_mutex);
             //When the queue is full, it returns false, it has been blocked in this line
             in_cv.wait(in_lock, [] {return inBuffer.size() < MAX_IN_BUFFER_SIZE; });
             inBuffer.push_front(move(buffer));
-            reader_finished = mmapInput.Valid() ? false : true;
+            reader_finished = mmapInput.IsValid() ? false : true;
         }
         in_cv.notify_one();
     }
@@ -306,19 +336,34 @@ void MergedFileWriter(const string& outputFile){
 void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit){
     vector<MMapReader> kWayReaders(k);
     vector<pair<int, string>> heapLines(k);
+    vector<deque<string>> linesBuffer(k);
+    pair<int,future<deque<string>>> fut;
+
+    int block_size = getpagesize();
+    int batch_size = (heapMemLimit/2/(k+1)/block_size)*block_size;
+    batch_size = batch_size > block_size ? batch_size : block_size;
+    int out_buffer_size =(heapMemLimit/2/(MAX_OUT_BUFFER_SIZE+2)/block_size)*block_size;
+    out_buffer_size = out_buffer_size > block_size ? out_buffer_size : block_size;
     
+    MergeManager mergeMgr(k, heapMemLimit/2, batch_size);
+
     long KWayMerged_size = 0;
     int lines = 0;
     for (int i = 0; i < k; i++){
         kWayReaders[i].MMapOpen(GetTmpFile(prefixTmpFile, i + base), true);
-        int length = 0;
-        char* p = kWayReaders[i].Readline(length);
-        heapLines[i] = {i, string(p, length)}; // copy to buffer
+        int readedLength  = kWayReaders[i].ReadSortedlines(linesBuffer[i], batch_size);
+        mergeMgr.AddToBuffer(readedLength-linesBuffer[i].front().length(), i);
+        heapLines[i] = {i, move(linesBuffer[i].front())};
+        linesBuffer[i].pop_front();
     }
-    //cout<<__FUNCTION__<<":"<<__LINE__<<endl;
+
+
     std::make_heap (heapLines.begin(),heapLines.end(), wrapper_lexicographical_compare_1);
     string buffer;
     buffer.reserve(heapMemLimit/3);
+    int pre_loaded_run = 0;
+    int pre_loaded_done = 0;
+    int not_pre_loaded = 0;
     while(heapLines.size()) {
         std::pop_heap(heapLines.begin(),heapLines.end(), wrapper_lexicographical_compare_1);
         int outWayIdx = heapLines.back().first;
@@ -326,15 +371,51 @@ void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit)
         lines++;
         heapLines.pop_back();
         
-        if (kWayReaders[outWayIdx].Valid()) {
-            int length = 0;
-            char* p = kWayReaders[outWayIdx].Readline(length);
-            heapLines.push_back({outWayIdx, string(p, length)}); // copy to buffer
+        if (linesBuffer[outWayIdx].size() == 0) {
+            // shouldn't go to this
+            if(fut.first == outWayIdx && fut.second.valid()){
+                fut.second.wait();
+                deque<string> futBuf = fut.second.get();
+                int readedLength = 0;
+                for (auto &x : futBuf) readedLength += x.size();
+                linesBuffer[outWayIdx].swap(futBuf);
+                mergeMgr.AddToBuffer(readedLength, outWayIdx);
+                pre_loaded_run++;
+            } else if (kWayReaders[outWayIdx].IsValid()){
+                int readedLength = kWayReaders[outWayIdx].ReadSortedlines(linesBuffer[outWayIdx], batch_size);
+                mergeMgr.AddToBuffer(readedLength, outWayIdx);
+                not_pre_loaded++;
+            }
+        }
+
+        if (linesBuffer[outWayIdx].size() != 0){
+            mergeMgr.RemoveFromBuffer(linesBuffer[outWayIdx].back().length(), outWayIdx);
+            heapLines.push_back({outWayIdx, move(linesBuffer[outWayIdx].front())}); // copy to buffer
             std::push_heap (heapLines.begin(), heapLines.end(), wrapper_lexicographical_compare_1);
+            linesBuffer[outWayIdx].pop_front();
+        }
+
+        //Pre-load
+        if (mergeMgr.ShouldPreload()){
+            if (fut.second.valid() && fut.second.wait_for(std::chrono::seconds(0)) == std::future_status::ready){
+                deque<string> futBuf = fut.second.get();
+                int readedLength = 0;
+                for (auto &x : futBuf) readedLength += x.size();
+                linesBuffer[fut.first].insert(linesBuffer[fut.first].end(), futBuf.begin(), futBuf.end());
+                mergeMgr.AddToBuffer(readedLength, fut.first);
+                pre_loaded_done++;
+            }
+            //Call async
+            int idxShortestBuf = mergeMgr.GetShortestBufIdx(kWayReaders);
+            if (!fut.second.valid() && idxShortestBuf >= 0 && idxShortestBuf < k){
+                fut.first = idxShortestBuf;
+                fut.second = async(launch::async, &MMapReader::ReadSortedlinesAsync, &kWayReaders[idxShortestBuf], batch_size);
+            }
         }
 
 
-        if (buffer.size() > heapMemLimit/3 || heapLines.empty()) {
+        // write to output buffer
+        if (static_cast<int>(buffer.size()) > out_buffer_size || heapLines.empty()) {
             {
                 std::unique_lock<std::mutex> out_lock(out_mutex);
                 //When the queue is full, it returns false, it has been blocked in this line
@@ -349,6 +430,7 @@ void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit)
         }
     }
     cout<<"KWayMerged Finished, lines = "<<lines<<" KWayMerged_size = "<<KWayMerged_size<<endl;
+    cout<<"pre_loaded_done = "<<pre_loaded_done<<" ,pre_loaded_run = "<<pre_loaded_run<<" ,not_pre_loaded = "<<not_pre_loaded<<endl;
 }
 
 void MergedPhase(const string& prefixTmpFile, const string& outputFile, int numInitialRun, long heapMemLimit){
@@ -364,7 +446,7 @@ void MergedPhase(const string& prefixTmpFile, const string& outputFile, int numI
     int runNum = numInitialRun;
     int numRemainRun = numInitialRun;
     while (numRemainRun > 1){
-        int k = numRemainRun < 10 ? numRemainRun : 10; //To do
+        int k = numRemainRun < 50 ? numRemainRun : 50; //To do
         numRemainRun = numRemainRun - k + 1;
         string actualOutputFile = numRemainRun == 1? outputFile : GetTmpFile(prefixTmpFile, runNum);
         std::thread t1(KWayMerged, k, base, outputFile , heapMemLimit);
