@@ -20,24 +20,15 @@
 
 using namespace std;
 
-inline bool wrapper_lexicographical_compare(const string& s1, const string& s2){
-    //return atoi(s1.c_str()) < atoi(s2.c_str());
-    return lexicographical_compare(s1.cbegin(), s1.cend(), s2.cbegin(), s2.cend());
-}
-
-inline bool wrapper_lexicographical_compare_1(const pair<int, string>& s1, const pair<int, string>& s2){
-    //return atoi(s1.second.c_str()) > atoi(s2.second.c_str());
-    return !lexicographical_compare(s1.second.cbegin(), s1.second.cend(), s2.second.cbegin(), s2.second.cend());
-}
-
-
 /*************/
 #define MAX_IN_BUFFER_SIZE 2
 #define MAX_OUT_BUFFER_SIZE 2
 
 /*************/
-struct MMapReader{  //for read purpose only
+class MMapReader{  //for read purpose only
 public:
+
+    MMapReader() = default;
 
     ~MMapReader(){
         munmap(beginPos, size);
@@ -48,11 +39,11 @@ public:
         //cout<<"Remove "<<fileName<<endl;
     }
 
-    void MMapOpen(const string& openfileName, bool isInputTmpfile = false, int size = -1){
+    void MMapOpen(const string& openfileName, bool isInputTmpfile = false, off_t read_size = -1){
         isTmpfile = isInputTmpfile;
         fileName = openfileName;
         // flag: https://man7.org/linux/man-pages/man2/open.2.html
-        fd = open(fileName.c_str(), O_RDONLY);
+        fd = open64(fileName.c_str(), O_RDONLY);
         if (fd == -1) {
             cout<<"Can't open file descriptor of "<<fileName<<endl;
             terminate();
@@ -61,18 +52,18 @@ public:
         /* Advise the kernel of our access pattern.  */
         //posix_fadvise(fd, 0, 0, 1);  // FDADVICE_SEQUENTIAL
 
-        if (size < 0){
-            struct stat st;
-            fstat(fd, &st);
-            size = st.st_size;
+        if (read_size < 0){
+            struct stat64 st;
+            fstat64(fd, &st);
+            read_size = st.st_size;
         }
-        size = size;
+        size = read_size;
 
-        beginPos = (char*) mmap(0, size, PROT_READ, MAP_SHARED, fd, 0);
+        beginPos = (char*) mmap64(0, size, PROT_READ, MAP_SHARED, fd, 0);
         
         if (beginPos == MAP_FAILED) {
             close(fd);
-            cout<<"Can't open mmap of "<<fileName<<endl;
+            cout<<"Can't open mmap of "<<fileName<<" size = "<<size<<endl;
             terminate();
         }
         endPos = beginPos + size;
@@ -103,11 +94,61 @@ private:
     bool isTmpfile;
 };
 
+class MergeManager {  // This class help to manage buffer of merger to preload data from disk
+public:
+    MergeManager(int k, int heapMemForMergeRead, int batch_size) :
+        kWays(k),
+        currentBufSize(0),
+        heapMemForMergeRead(heapMemForMergeRead),
+        batch_size(batch_size){
+            bufSizeKways.resize(k,0);
+        }
+    
+    void AddToBuffer(int add_size, int add_idx){
+        currentBufSize += add_size;
+        bufSizeKways[add_idx] += add_size;
+    }
 
-//utility function
+    void RemoveFromBuffer(int remove_size, int add_idx){
+        currentBufSize -= remove_size;
+        bufSizeKways[add_idx] -= remove_size;
+    }
+
+    int getShortestBufIdx() const{
+        return min_element(bufSizeKways.begin(), bufSizeKways.end()) - bufSizeKways.begin();
+    }
+
+    int getSumBufSize() const {
+        return currentBufSize;
+    }
+
+    bool shouldPreload() const {
+        return heapMemForMergeRead - currentBufSize >= batch_size;
+    }
+
+private:
+    int kWays;
+    int currentBufSize; // size all buffer;
+    int heapMemForMergeRead;
+    int batch_size;
+    vector<int> bufSizeKways; // store size of K buffer
+};
+
+/*----utility function-----------*/
 string GetTmpFile(string prefixTmpFile, int runNumber){
     return prefixTmpFile + "_" + to_string(runNumber);
 }
+
+inline bool wrapper_lexicographical_compare(const string& s1, const string& s2){
+    //return atoi(s1.c_str()) < atoi(s2.c_str());
+    return lexicographical_compare(s1.cbegin(), s1.cend(), s2.cbegin(), s2.cend());
+}
+
+inline bool wrapper_lexicographical_compare_1(const pair<int, string>& s1, const pair<int, string>& s2){
+    //return atoi(s1.second.c_str()) > atoi(s2.second.c_str());
+    return !lexicographical_compare(s1.second.cbegin(), s1.second.cend(), s2.second.cbegin(), s2.second.cend());
+}
+/*-------------------------------------*/
 
 std::deque<vector<string>> inBuffer;
 std::deque<string> outBuffer;
@@ -263,14 +304,11 @@ void MergedFileWriter(const string& outputFile){
 
 // Merge k files:  ${inputFile}_${step}_${base} -> ${inputFile}_${step}_${base + k}
 void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit){
-    //vector<string> outBuffer;
-    //cout<<__FUNCTION__<<":"<<__LINE__<<endl;
     vector<MMapReader> kWayReaders(k);
-    //cout<<__FUNCTION__<<":"<<__LINE__<<endl;
     vector<pair<int, string>> heapLines(k);
+    
     long KWayMerged_size = 0;
     int lines = 0;
-    //cout<<__FUNCTION__<<":"<<__LINE__<<endl;
     for (int i = 0; i < k; i++){
         kWayReaders[i].MMapOpen(GetTmpFile(prefixTmpFile, i + base), true);
         int length = 0;
