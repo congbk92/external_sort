@@ -217,7 +217,7 @@ void FileReader(const string& inputFile, long heapMemLimit){
             std::unique_lock<std::mutex> in_lock(in_mutex);
             //When the queue is full, it returns false, it has been blocked in this line
             in_cv.wait(in_lock, [] {return inBuffer.size() < MAX_IN_BUFFER_SIZE; });
-            inBuffer.push_front(move(buffer));
+            inBuffer.push_back(move(buffer));
             reader_finished = mmapInput.IsValid() ? false : true;
         }
         in_cv.notify_one();
@@ -235,8 +235,8 @@ void Sorter(){
             std::unique_lock<std::mutex> in_lock(in_mutex);
             //When the queue is empty, it returns false, it has been blocked in this line
             in_cv.wait(in_lock, [] {return !inBuffer.empty(); });
-            swap(buffer, inBuffer.back());
-            inBuffer.pop_back();
+            swap(buffer, inBuffer.front());
+            inBuffer.pop_front();
             isDone = (reader_finished && (inBuffer.size() == 0));
         }
         in_cv.notify_one();
@@ -252,7 +252,7 @@ void Sorter(){
             //When the queue is full, it returns false, it has been blocked in this line
             out_cv.wait(out_lock, [] {return outBuffer.size() < MAX_OUT_BUFFER_SIZE; });
             Sorter_size += tmp.size();
-            outBuffer.push_front(move(tmp));
+            outBuffer.push_back(move(tmp));
             sorter_finished = isDone;
         }
         out_cv.notify_one();
@@ -270,8 +270,8 @@ void FileWriter(const string& outputFile, int& numRun){
             std::unique_lock<std::mutex> out_lock(out_mutex);
             //When the queue is full, it returns false, it has been blocked in this line
             out_cv.wait(out_lock, [] {return !outBuffer.empty(); });
-            swap(buffer, outBuffer.back());
-            outBuffer.pop_back();
+            swap(buffer, outBuffer.front());
+            outBuffer.pop_front();
             isDone = (sorter_finished && outBuffer.empty());
         }
         out_cv.notify_one();
@@ -320,8 +320,8 @@ void MergedFileWriter(const string& outputFile){
             std::unique_lock<std::mutex> out_lock(out_mutex);
             //When the queue is full, it returns false, it has been blocked in this line
             out_cv.wait(out_lock, [] {return !outBuffer.empty(); });
-            buffer = outBuffer.back();
-            outBuffer.pop_back();
+            buffer = outBuffer.front();
+            outBuffer.pop_front();
             isDone = (merger_finished && outBuffer.empty());
         }
         out_cv.notify_one();
@@ -422,7 +422,7 @@ void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit)
                 out_cv.wait(out_lock, [] {return outBuffer.size() < MAX_OUT_BUFFER_SIZE; });
                 // Block in here
                 KWayMerged_size += buffer.size();
-                outBuffer.push_front(move(buffer));
+                outBuffer.push_back(move(buffer));
                 buffer.clear();
                 merger_finished = heapLines.empty();
             }
