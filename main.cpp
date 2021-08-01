@@ -11,6 +11,7 @@
 #include <cstdio>
 #include <future>
 #include <climits>
+#include <list>
 
 // for mmap
 #include <sys/stat.h>
@@ -61,7 +62,7 @@ public:
         }
         size = read_size;
 
-        beginPos = (char*) mmap64(0, size, PROT_READ, MAP_SHARED, fd, 0);
+        beginPos = (char*) mmap64(NULL, size, PROT_READ, MAP_SHARED, fd, 0);
         
         if (beginPos == MAP_FAILED) {
             close(fd);
@@ -92,7 +93,7 @@ public:
         return readedLength;
     }
 
-    int ReadSortedlines(deque<string>& lines, int batch_size){
+    int ReadSortedlines(list<string>& lines, int batch_size){
         int readedLength = 0;
         while (readedLength < batch_size && IsValid()){
             lines.push_back(Readline());
@@ -101,8 +102,8 @@ public:
         return readedLength;
     }
 
-    deque<string> ReadSortedlinesAsync(int batch_size){
-        deque<string> lines;
+    list<string> ReadSortedlinesAsync(int batch_size){
+        list<string> lines;
         int readedLength = 0;
         while (readedLength < batch_size && IsValid()){
             lines.push_back(Readline());
@@ -344,16 +345,17 @@ void MergedFileWriter(const string& outputFile){
 void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit){
     vector<MMapReader> kWayReaders(k);
     vector<pair<int, string>> heapLines(k);
-    vector<deque<string>> linesBuffer(k);
-    pair<int,future<deque<string>>> fut;
+    vector<list<string>> linesBuffer(k);
+    pair<int,future<list<string>>> fut;
 
     int block_size = getpagesize();
-    int batch_size = (heapMemLimit/2/(k+1)/block_size)*block_size;
-    batch_size = batch_size > block_size ? batch_size : block_size;
-    int out_buffer_size =(heapMemLimit/2/(MAX_OUT_BUFFER_SIZE+2)/block_size)*block_size;
+    //int batch_size = (heapMemLimit/2/(k+1)/block_size)*block_size;
+    //batch_size = batch_size > block_size ? batch_size : block_size;
+    int batch_size = block_size;
+    size_t out_buffer_size =(heapMemLimit/4/(MAX_OUT_BUFFER_SIZE)/block_size)*block_size;
     out_buffer_size = out_buffer_size > block_size ? out_buffer_size : block_size;
     
-    cout<<"batch_size = "<<batch_size<<" out_buffer_size = "<<out_buffer_size<<endl;
+    cout<<"k =  "<<k<<" batch_size = "<<batch_size<<" out_buffer_size = "<<out_buffer_size<<endl;
     MergeManager mergeMgr(k, heapMemLimit/2, batch_size);
 
     long KWayMerged_size = 0;
@@ -384,7 +386,7 @@ void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit)
             // shouldn't go to this
             if(fut.first == outWayIdx && fut.second.valid()){
                 fut.second.wait();
-                deque<string> futBuf = fut.second.get();
+                list<string> futBuf = fut.second.get();
                 int readedLength = 0;
                 for (auto &x : futBuf) readedLength += x.size();
                 linesBuffer[outWayIdx].swap(futBuf);
@@ -408,7 +410,7 @@ void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit)
         //Pre-load
         if (mergeMgr.ShouldPreload()){
             if (fut.second.valid() && fut.second.wait_for(std::chrono::seconds(0)) == std::future_status::ready){
-                deque<string> futBuf = fut.second.get();
+                list<string> futBuf = fut.second.get();
                 int readedLength = 0;
                 for (auto &x : futBuf) readedLength += x.size();
                 linesBuffer[fut.first].insert(linesBuffer[fut.first].end(), futBuf.begin(), futBuf.end());
@@ -427,7 +429,7 @@ void KWayMerged(int k, int base, const string& prefixTmpFile, long heapMemLimit)
 
 
         // write to output buffer
-        if (static_cast<int>(buffer.size()) > out_buffer_size || heapLines.empty()) {
+        if (buffer.size() > out_buffer_size || heapLines.empty()) {
             {
                 std::unique_lock<std::mutex> out_lock(out_mutex);
                 //When the queue is full, it returns false, it has been blocked in this line
@@ -454,11 +456,15 @@ void MergedPhase(const string& prefixTmpFile, const string& outputFile, int numI
         return;
     }
 
+    int max_k = heapMemLimit/2/getpagesize() -1; //ensure each buff > 1 page
+    max_k = max_k < 500 ? max_k : 500; //To Do
+
     int base = 0;
     int runNum = numInitialRun;
     int numRemainRun = numInitialRun;
     while (numRemainRun > 1){
-        int k = numRemainRun < 200 ? numRemainRun : 200; //To do
+        int k = numRemainRun < max_k ? numRemainRun : max_k; //To do
+        //int k = 2;
         numRemainRun = numRemainRun - k + 1;
         string actualOutputFile = numRemainRun == 1? outputFile : GetTmpFile(prefixTmpFile, runNum);
         std::thread t1(KWayMerged, k, base, outputFile , heapMemLimit);
@@ -492,11 +498,11 @@ int main(int argc, char **argv)
     
     string prefixTmpFile = outputFile;
     //Initial phase
-    int numRun = InitialPhase(inputFile, prefixTmpFile, memLimitSize);
+    int numRun = InitialPhase(inputFile, prefixTmpFile, memLimitSize/2);
     std::cout << "InitialPhase numRun =  "<<numRun<<std::endl;
 
     //Merged phase
-    MergedPhase(prefixTmpFile, outputFile, numRun, memLimitSize);
+    MergedPhase(prefixTmpFile, outputFile, numRun, memLimitSize/32); //TO DO
 
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     std::cout << "Elapsed time = " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << "[s]" << std::endl;
