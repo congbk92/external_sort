@@ -6,7 +6,7 @@ In this project, those external sort algorithms was implemented to lexicographic
 ## Description
 
 At this fisrt version, the basic exeternal sorting was implemented as the following:
-* In former phase (initial phase), there are 3 threads: Reader, Sorter, Writer. There threads comunicate by an buffer which was synchronize by producer/consumer pattern.
+* In formation phase (initial phase), there are 3 threads: Reader, Sorter, Writer. There threads comunicate by an buffer which was synchronize by producer/consumer pattern.
 * Merged phase base on k-ways merged algorithm. It help reduce number runs in this phase.
 In both those phase, Multithread was used to overlap CPU process and I/O operation as much as possible.
 
@@ -27,6 +27,13 @@ In next version, the following will be consider to implement:
 ### Executing program
 
 * ./main #input_file_name #output_file_name #memory_limmit
+
+### Result
+* Performance: It sorted 12Gb with 400Mb memory limit. It consumed about 10 minutes. 
+* Memory consume: Massif from Valgrind was used to check. It sort 200Mb with 8Mb memory limit. The result was in massif.out.12348 file. It was visualized by massif visualizer as file the following:
+![](https://github.com/congbk92/external_sort/blob/884590b239f783783d9dfa012cc7603d6d4d6661/img.jpg?raw=true)
+
+* In almost time, it consumed from 9Mb to 16Mb. It is higher than expected. Because the containers from the standard library tried to allocate more than the current demand. It is an optimization and helped to reduce the times of heap allocation. Btw, there is a pit in this graph. It is time to change the formation phase to the merge phase.
 
 ## Help
 
