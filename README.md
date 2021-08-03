@@ -41,5 +41,5 @@ Cong, Nguyen Thanh
 
 ## Acknowledgments
 
-* [External Sorting Algorithm: State-of-the-Art and Future Directions] (https://www.researchgate.net/publication/341163308_External_Sorting_Algorithm_State-of-the-Art_and_Future_Directions)
-* [External sorting: Run formation revisited] (https://www.researchgate.net/publication/3297177_External_sorting_Run_formation_revisited)
+![External Sorting Algorithm: State-of-the-Art and Future Directions] (https://www.researchgate.net/publication/341163308_External_Sorting_Algorithm_State-of-the-Art_and_Future_Directions)
+![External sorting: Run formation revisited] (https://www.researchgate.net/publication/3297177_External_sorting_Run_formation_revisited)
