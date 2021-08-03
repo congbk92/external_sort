@@ -61,7 +61,7 @@ int GetInitialBatchSize(long memLimitedSize){
 }
 
 size_t GetInitialBufferSize(long memLimitedSize){
-    int num = GetInitialBatchSize(memLimitedSize)/memLimitedSize - 5;
+    int num = memLimitedSize/GetInitialBatchSize(memLimitedSize) - 5;
     return max(num, MIN_BUFFER_SIZE); 
 }
 
@@ -190,7 +190,7 @@ void FileReader(const string& inputFile, int batch_size, size_t buffer_size){
         }
         in_cv.notify_one();
     }
-    cout<<"FileReader Finished"<<endl;
+    //cout<<"FileReader Finished"<<endl;
 }
 
 void Sorter(int batch_size, size_t buffer_size){
@@ -223,7 +223,7 @@ void Sorter(int batch_size, size_t buffer_size){
         }
         out_cv.notify_one();
     }
-    cout<<"Sorter Finished"<<endl;
+    //cout<<"Sorter Finished"<<endl;
 }
 
 int FileWriter(const string& outputFile){
@@ -250,7 +250,7 @@ int FileWriter(const string& outputFile){
         fclose (pFile);
         numRun++;
     }
-    cout<<"FileWriter Finished"<<endl;
+    //cout<<"FileWriter Finished"<<endl;
     return numRun;
 }
 
@@ -258,6 +258,9 @@ int InitialPhase(const string& inputFile, const string& prefixTmpFile, long heap
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     int init_batch_size = GetInitialBatchSize(heapMemLimit);
     size_t buffer_size = GetInitialBufferSize(heapMemLimit);
+
+    cout<<"init_batch_size = "<<init_batch_size<<", buffer_size = "<<buffer_size<<endl;
+
     std::thread t1(FileReader, inputFile, init_batch_size, buffer_size/2);
 	std::thread t2(Sorter, init_batch_size, buffer_size/2);
 
@@ -296,7 +299,7 @@ void MergedFileWriter(const string& outputFile){
         fwrite (buffer.c_str() , sizeof(char), buffer.size(), pFile);
     }
     fclose (pFile);
-    cout<<"MergedFileWriter Finished"<<endl;
+    //cout<<"MergedFileWriter Finished"<<endl;
 }
 
 // Merge k files:  ${inputFile}_${step}_${base} -> ${inputFile}_${step}_${base + k}
@@ -348,7 +351,7 @@ void KWayMerged(int k, int base, const string& prefixTmpFile, int in_batch_size,
         }
         buffer += outLine;
     }
-    cout<<"KWayMerged Finished, k = "<<k<<endl;
+    //cout<<"KWayMerged Finished, k = "<<k<<endl;
 }
 
 void MergedPhase(const string& prefixTmpFile, const string& outputFile, int numInitialRun, long heapMemLimit){
@@ -371,6 +374,10 @@ void MergedPhase(const string& prefixTmpFile, const string& outputFile, int numI
         int in_batch_size = GetMergeReaderBatchSize(heapMemLimit, k);
         int out_batch_size = GetMergeWriterBatchSize(heapMemLimit);
         size_t out_buff_size = GetMergeWriterBufferSize(heapMemLimit);
+
+        cout<<"k = "<<k<<", in_batch_size = "<<in_batch_size
+            <<", out_batch_size = "<<out_batch_size<<", out_buff_size = "<<out_buff_size<<endl;
+
         //int k = 2;
         numRemainRun = numRemainRun - k + 1;
         string actualOutputFile = numRemainRun == 1? outputFile : GetTmpFile(prefixTmpFile, runNum);

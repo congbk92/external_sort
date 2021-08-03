@@ -1,0 +1,14 @@
+init_batch_size = 44441600, buffer_size = 4
+InitialPhase Elapsed time = 209[s]
+InitialPhase numRun =  292
+k = 292, in_batch_size = 679936, out_batch_size = 49999872, out_buff_size = 6
+MergedPhase Elapsed time = 410[s]
+Elapsed time = 620[s]
+
+
+${BASEDIR}/main.out /media/mypc/FC5C97E25C9795CC/testcase/world192_5000.txt /media/mypc/FC5C97E25C9795CC/testcase/world192_5000_out.txt 400000000
+
+ll -h /media/mypc/FC5C97E25C9795CC/testcase/world192_5000.txt
+-rwxrwxrwx 1 mypc mypc 12G Thg 8   3 21:04 /media/mypc/FC5C97E25C9795CC/testcase/world192_5000.txt*
+
+
