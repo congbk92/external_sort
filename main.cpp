@@ -138,27 +138,23 @@ public:
         //madvise(beginPos, size, MADV_SEQUENTIAL);
     }
 
-    pair<char*, int> Readline(){
+    pair<char*, size_t> Readline(){
         char* find_pos = (char*) memchr(currentPos, '\n', endPos - currentPos);
         char* endline_pos = find_pos ? find_pos+1 : endPos;
-        int length = endline_pos - currentPos;
+        size_t length = endline_pos - currentPos;
         char *p = currentPos;
         currentPos = find_pos ? find_pos+1:NULL;
         return {p,length};
     }
 
     template<typename T>
-    int ReadLines(T& lines, int batch_size){
-        int readedLength = 0;
+    void ReadLines(T& lines, int batch_size){
         int cap = 0;
         while (cap < batch_size && IsValid()){
-            pair<char*, int> line = Readline();
+            pair<char*, size_t> line = Readline();
             lines.emplace_back(line.first, line.second);
-            readedLength += line.second;
             cap += lines.back().capacity();
         }
-        //cout<<__FUNCTION__<<":"<<__LINE__<<" cap = "<<cap<<" readLength = "<<readedLength<<endl;
-        return readedLength;
     }
 
     bool IsValid() const {
