@@ -26,7 +26,7 @@ In next version, the following will be consider to implement:
 
 ### Executing program
 
-* ./main #input_file_name #output_file_name #memory_limmit
+* ./main.out #input_file_name #output_file_name #memory_limmit
 
 ### Result
 #### Performance: 
