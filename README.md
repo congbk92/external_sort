@@ -42,6 +42,10 @@ Massif from Valgrind was used to check. It sort 200Mb with 8Mb memory limit. The
 ![](https://github.com/congbk92/external_sort/blob/884590b239f783783d9dfa012cc7603d6d4d6661/img.jpg?raw=true)
 In almost time, it consumed from 9Mb to 16Mb. It is higher than expected. Because the containers from the standard library tried to allocate more than the current demand. It is an optimization and helped to reduce the times of heap allocation. Btw, there is a pit in this graph. It is time to change the formation phase to the merge phase.
 
+Other experiments, Sort 1.2Gb with 40Mb memory and Sort 12Gb with 400Mb. Results in the following: 
+![](https://github.com/congbk92/external_sort/blob/55d8eb409cc0cc492b32f05ee2a3d1d0801c6a09/img2.jpg?raw=true)
+![](https://github.com/congbk92/external_sort/blob/55d8eb409cc0cc492b32f05ee2a3d1d0801c6a09/img3.jpg?raw=true)
+
 ## Help
 
 ## Authors
