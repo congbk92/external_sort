@@ -1,0 +1,740 @@
+desc: (none)
+cmd: ./main.out /media/mypc/FC5C97E25C9795CC/testcase/world192_5000.txt /media/mypc/FC5C97E25C9795CC/testcase/world192_5000_out.txt 400000000
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=31960203072
+mem_heap_B=499156154
+mem_heap_extra_B=37675510
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=2
+#-----------
+time=63894813654
+mem_heap_B=496743541
+mem_heap_extra_B=36912691
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=107088230356
+mem_heap_B=496733282
+mem_heap_extra_B=36911542
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=138582802686
+mem_heap_B=499157240
+mem_heap_extra_B=37668104
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=201897218793
+mem_heap_B=499156374
+mem_heap_extra_B=37668738
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=242236093345
+mem_heap_B=499154493
+mem_heap_extra_B=37670083
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=279688918543
+mem_heap_B=499151940
+mem_heap_extra_B=37671188
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=322821092606
+mem_heap_B=499157045
+mem_heap_extra_B=37668915
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=348765164213
+mem_heap_B=499156856
+mem_heap_extra_B=37669536
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=389242159488
+mem_heap_B=446118758
+mem_heap_extra_B=31558514
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=443762194990
+mem_heap_B=499149867
+mem_heap_extra_B=37667557
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=469836226347
+mem_heap_B=422358804
+mem_heap_extra_B=29366364
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=513033452035
+mem_heap_B=423366942
+mem_heap_extra_B=29685010
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=570458116473
+mem_heap_B=499156610
+mem_heap_extra_B=37669342
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=611616885582
+mem_heap_B=517376451
+mem_heap_extra_B=50211173
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=654257166997
+mem_heap_B=606265228
+mem_heap_extra_B=50219076
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=685928529947
+mem_heap_B=408739478
+mem_heap_extra_B=27725666
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=726356136035
+mem_heap_B=454930257
+mem_heap_extra_B=34323151
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=763843864919
+mem_heap_B=497798468
+mem_heap_extra_B=37243340
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=792353937056
+mem_heap_B=499156371
+mem_heap_extra_B=37669117
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=841860367123
+mem_heap_B=685477111
+mem_heap_extra_B=105899945
+mem_stacks_B=0
+heap_tree=detailed
+n3: 685477111 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 635331264 0x1107F0: allocate (new_allocator.h:114)
+  n1: 635331264 0x1107F0: allocate (alloc_traits.h:444)
+   n1: 635331264 0x1107F0: _M_get_node (stl_list.h:438)
+    n1: 635331264 0x1107F0: _M_create_node<char*&, long unsigned int&> (stl_list.h:630)
+     n1: 635331264 0x1107F0: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+      n1: 635331264 0x1107F0: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+       n1: 635331264 0x1107F0: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+        n1: 635331264 0x1107F0: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:309)
+         n1: 635331264 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 635331264 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 635331264 0x4B9A292: clone (clone.S:95)
+ n2: 49999873 0x499B87F: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve(unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 49999873 0x110A2C: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:317)
+   n1: 49999873 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+    n1: 49999873 0x4A5E608: start_thread (pthread_create.c:477)
+     n0: 49999873 0x4B9A292: clone (clone.S:95)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+ n0: 145974 in 36 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=22
+#-----------
+time=899596440575
+mem_heap_B=218803149
+mem_heap_extra_B=3749739
+mem_stacks_B=0
+heap_tree=detailed
+n5: 218803149 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 149999619 0x499B87F: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve(unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 149999619 0x111190: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:343)
+   n1: 149999619 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+    n1: 149999619 0x4A5E608: start_thread (pthread_create.c:477)
+     n0: 149999619 0x4B9A292: clone (clone.S:95)
+  n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n2: 50018572 0x499B29E: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 49999873 0x10C7E4: assign (basic_string.h:1366)
+   n1: 49999873 0x10C7E4: operator= (basic_string.h:696)
+    n1: 49999873 0x10C7E4: MergedFileWriter(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (main.cpp:290)
+     n1: 49999873 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+      n1: 49999873 0x4A5E608: start_thread (pthread_create.c:477)
+       n0: 49999873 0x4B9A292: clone (clone.S:95)
+  n0: 18699 in 3 places, all below massif's threshold (1.00%)
+ n1: 15461376 0x110EC5: allocate (new_allocator.h:114)
+  n1: 15461376 0x110EC5: allocate (alloc_traits.h:444)
+   n1: 15461376 0x110EC5: _M_get_node (stl_list.h:438)
+    n1: 15461376 0x110EC5: _M_create_node<char*&, long unsigned int&> (stl_list.h:630)
+     n1: 15461376 0x110EC5: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+      n1: 15461376 0x110EC5: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+       n1: 15461376 0x110EC5: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+        n1: 15461376 0x110EC5: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:325)
+         n1: 15461376 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 15461376 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 15461376 0x4B9A292: clone (clone.S:95)
+ n1: 3192090 0x110EF5: _M_construct<char const*> (basic_string.tcc:219)
+  n1: 3192090 0x110EF5: _M_construct_aux<char const*> (basic_string.h:247)
+   n1: 3192090 0x110EF5: _M_construct<char const*> (basic_string.h:266)
+    n1: 3192090 0x110EF5: basic_string (basic_string.h:513)
+     n1: 3192090 0x110EF5: construct<std::__cxx11::basic_string<char>, char*&, long unsigned int&> (new_allocator.h:147)
+      n1: 3192090 0x110EF5: construct<std::__cxx11::basic_string<char>, char*&, long unsigned int&> (alloc_traits.h:484)
+       n1: 3192090 0x110EF5: _M_create_node<char*&, long unsigned int&> (stl_list.h:633)
+        n1: 3192090 0x110EF5: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+         n1: 3192090 0x110EF5: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+          n1: 3192090 0x110EF5: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+           n1: 3192090 0x110EF5: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:325)
+            n1: 3192090 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+             n1: 3192090 0x4A5E608: start_thread (pthread_create.c:477)
+              n0: 3192090 0x4B9A292: clone (clone.S:95)
+ n0: 131492 in 36 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=23
+#-----------
+time=935256605366
+mem_heap_B=807324466
+mem_heap_extra_B=94239694
+mem_stacks_B=0
+heap_tree=detailed
+n5: 807324466 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 349999111 0x499B87F: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve(unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 349999111 0x111190: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:343)
+   n1: 349999111 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+    n1: 349999111 0x4A5E608: start_thread (pthread_create.c:477)
+     n0: 349999111 0x4B9A292: clone (clone.S:95)
+  n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n1: 224539152 0x110EC5: allocate (new_allocator.h:114)
+  n1: 224539152 0x110EC5: allocate (alloc_traits.h:444)
+   n1: 224539152 0x110EC5: _M_get_node (stl_list.h:438)
+    n1: 224539152 0x110EC5: _M_create_node<char*&, long unsigned int&> (stl_list.h:630)
+     n1: 224539152 0x110EC5: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+      n1: 224539152 0x110EC5: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+       n1: 224539152 0x110EC5: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+        n1: 224539152 0x110EC5: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:325)
+         n1: 224539152 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 224539152 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 224539152 0x4B9A292: clone (clone.S:95)
+ n1: 182636139 0x110EF5: _M_construct<char const*> (basic_string.tcc:219)
+  n1: 182636139 0x110EF5: _M_construct_aux<char const*> (basic_string.h:247)
+   n1: 182636139 0x110EF5: _M_construct<char const*> (basic_string.h:266)
+    n1: 182636139 0x110EF5: basic_string (basic_string.h:513)
+     n1: 182636139 0x110EF5: construct<std::__cxx11::basic_string<char>, char*&, long unsigned int&> (new_allocator.h:147)
+      n1: 182636139 0x110EF5: construct<std::__cxx11::basic_string<char>, char*&, long unsigned int&> (alloc_traits.h:484)
+       n1: 182636139 0x110EF5: _M_create_node<char*&, long unsigned int&> (stl_list.h:633)
+        n1: 182636139 0x110EF5: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+         n1: 182636139 0x110EF5: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+          n1: 182636139 0x110EF5: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+           n1: 182636139 0x110EF5: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:325)
+            n1: 182636139 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+             n1: 182636139 0x4A5E608: start_thread (pthread_create.c:477)
+              n0: 182636139 0x4B9A292: clone (clone.S:95)
+ n2: 50018572 0x499B29E: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 49999873 0x10C7E4: assign (basic_string.h:1366)
+   n1: 49999873 0x10C7E4: operator= (basic_string.h:696)
+    n1: 49999873 0x10C7E4: MergedFileWriter(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (main.cpp:290)
+     n1: 49999873 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+      n1: 49999873 0x4A5E608: start_thread (pthread_create.c:477)
+       n0: 49999873 0x4B9A292: clone (clone.S:95)
+  n0: 18699 in 3 places, all below massif's threshold (1.00%)
+ n0: 131492 in 36 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=24
+#-----------
+time=972064694394
+mem_heap_B=759577724
+mem_heap_extra_B=80926908
+mem_stacks_B=0
+heap_tree=detailed
+n5: 759577724 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 349999111 0x499B87F: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve(unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 349999111 0x111190: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:343)
+   n1: 349999111 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+    n1: 349999111 0x4A5E608: start_thread (pthread_create.c:477)
+     n0: 349999111 0x4B9A292: clone (clone.S:95)
+  n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n1: 182413109 0x110EF5: _M_construct<char const*> (basic_string.tcc:219)
+  n1: 182413109 0x110EF5: _M_construct_aux<char const*> (basic_string.h:247)
+   n1: 182413109 0x110EF5: _M_construct<char const*> (basic_string.h:266)
+    n1: 182413109 0x110EF5: basic_string (basic_string.h:513)
+     n1: 182413109 0x110EF5: construct<std::__cxx11::basic_string<char>, char*&, long unsigned int&> (new_allocator.h:147)
+      n1: 182413109 0x110EF5: construct<std::__cxx11::basic_string<char>, char*&, long unsigned int&> (alloc_traits.h:484)
+       n1: 182413109 0x110EF5: _M_create_node<char*&, long unsigned int&> (stl_list.h:633)
+        n1: 182413109 0x110EF5: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+         n1: 182413109 0x110EF5: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+          n1: 182413109 0x110EF5: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+           n1: 182413109 0x110EF5: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:325)
+            n1: 182413109 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+             n1: 182413109 0x4A5E608: start_thread (pthread_create.c:477)
+              n0: 182413109 0x4B9A292: clone (clone.S:95)
+ n1: 177014928 0x110EC5: allocate (new_allocator.h:114)
+  n1: 177014928 0x110EC5: allocate (alloc_traits.h:444)
+   n1: 177014928 0x110EC5: _M_get_node (stl_list.h:438)
+    n1: 177014928 0x110EC5: _M_create_node<char*&, long unsigned int&> (stl_list.h:630)
+     n1: 177014928 0x110EC5: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+      n1: 177014928 0x110EC5: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+       n1: 177014928 0x110EC5: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+        n1: 177014928 0x110EC5: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:325)
+         n1: 177014928 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 177014928 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 177014928 0x4B9A292: clone (clone.S:95)
+ n2: 50018572 0x499B29E: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 49999873 0x10C7E4: assign (basic_string.h:1366)
+   n1: 49999873 0x10C7E4: operator= (basic_string.h:696)
+    n1: 49999873 0x10C7E4: MergedFileWriter(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (main.cpp:290)
+     n1: 49999873 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+      n1: 49999873 0x4A5E608: start_thread (pthread_create.c:477)
+       n0: 49999873 0x4B9A292: clone (clone.S:95)
+  n0: 18699 in 3 places, all below massif's threshold (1.00%)
+ n0: 132004 in 36 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=25
+#-----------
+time=1010067369360
+mem_heap_B=651015271
+mem_heap_extra_B=59435049
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=1072500328806
+mem_heap_B=653219217
+mem_heap_extra_B=50107391
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=27
+#-----------
+time=1104599415209
+mem_heap_B=644602487
+mem_heap_extra_B=51937593
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=1157540545593
+mem_heap_B=500991417
+mem_heap_extra_B=20253511
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=1215524686686
+mem_heap_B=676002980
+mem_heap_extra_B=59824300
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=30
+#-----------
+time=1265695510234
+mem_heap_B=629037263
+mem_heap_extra_B=45832129
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=1296313186589
+mem_heap_B=651833364
+mem_heap_extra_B=51710676
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=32
+#-----------
+time=1330332838294
+mem_heap_B=640396762
+mem_heap_extra_B=51547702
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=33
+#-----------
+time=1367754451243
+mem_heap_B=518415060
+mem_heap_extra_B=24054812
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=1398372141866
+mem_heap_B=562003966
+mem_heap_extra_B=32820042
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=1435793753912
+mem_heap_B=368949785
+mem_heap_extra_B=3790863
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=1477130797670
+mem_heap_B=550467914
+mem_heap_extra_B=36070486
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=37
+#-----------
+time=1518467493452
+mem_heap_B=420000893
+mem_heap_extra_B=4116131
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=1559804640665
+mem_heap_B=567998608
+mem_heap_extra_B=35656400
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=1604321727777
+mem_heap_B=636022813
+mem_heap_extra_B=46630011
+mem_stacks_B=0
+heap_tree=detailed
+n5: 636022813 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 349999111 0x499B87F: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve(unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 349999111 0x111190: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:343)
+   n1: 349999111 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+    n1: 349999111 0x4A5E608: start_thread (pthread_create.c:477)
+     n0: 349999111 0x4B9A292: clone (clone.S:95)
+  n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n1: 137481286 0x110EF5: _M_construct<char const*> (basic_string.tcc:219)
+  n1: 137481286 0x110EF5: _M_construct_aux<char const*> (basic_string.h:247)
+   n1: 137481286 0x110EF5: _M_construct<char const*> (basic_string.h:266)
+    n1: 137481286 0x110EF5: basic_string (basic_string.h:513)
+     n1: 137481286 0x110EF5: construct<std::__cxx11::basic_string<char>, char*&, long unsigned int&> (new_allocator.h:147)
+      n1: 137481286 0x110EF5: construct<std::__cxx11::basic_string<char>, char*&, long unsigned int&> (alloc_traits.h:484)
+       n1: 137481286 0x110EF5: _M_create_node<char*&, long unsigned int&> (stl_list.h:633)
+        n1: 137481286 0x110EF5: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+         n1: 137481286 0x110EF5: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+          n1: 137481286 0x110EF5: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+           n1: 137481286 0x110EF5: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:325)
+            n1: 137481286 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+             n1: 137481286 0x4A5E608: start_thread (pthread_create.c:477)
+              n0: 137481286 0x4B9A292: clone (clone.S:95)
+ n1: 98391840 0x110EC5: allocate (new_allocator.h:114)
+  n1: 98391840 0x110EC5: allocate (alloc_traits.h:444)
+   n1: 98391840 0x110EC5: _M_get_node (stl_list.h:438)
+    n1: 98391840 0x110EC5: _M_create_node<char*&, long unsigned int&> (stl_list.h:630)
+     n1: 98391840 0x110EC5: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+      n1: 98391840 0x110EC5: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+       n1: 98391840 0x110EC5: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+        n1: 98391840 0x110EC5: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:325)
+         n1: 98391840 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 98391840 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 98391840 0x4B9A292: clone (clone.S:95)
+ n2: 50018572 0x499B29E: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 49999873 0x10C7E4: assign (basic_string.h:1366)
+   n1: 49999873 0x10C7E4: operator= (basic_string.h:696)
+    n1: 49999873 0x10C7E4: MergedFileWriter(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (main.cpp:290)
+     n1: 49999873 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+      n1: 49999873 0x4A5E608: start_thread (pthread_create.c:477)
+       n0: 49999873 0x4B9A292: clone (clone.S:95)
+  n0: 18699 in 3 places, all below massif's threshold (1.00%)
+ n0: 132004 in 36 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=40
+#-----------
+time=1663632086517
+mem_heap_B=416598215
+mem_heap_extra_B=3838217
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=1689719117826
+mem_heap_B=891984350
+mem_heap_extra_B=157335082
+mem_stacks_B=0
+heap_tree=peak
+n5: 891984350 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 379081968 0x110EC5: allocate (new_allocator.h:114)
+  n1: 379081968 0x110EC5: allocate (alloc_traits.h:444)
+   n1: 379081968 0x110EC5: _M_get_node (stl_list.h:438)
+    n1: 379081968 0x110EC5: _M_create_node<char*&, long unsigned int&> (stl_list.h:630)
+     n1: 379081968 0x110EC5: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+      n1: 379081968 0x110EC5: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+       n1: 379081968 0x110EC5: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+        n1: 379081968 0x110EC5: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:325)
+         n1: 379081968 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 379081968 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 379081968 0x4B9A292: clone (clone.S:95)
+ n2: 349999111 0x499B87F: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve(unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 349999111 0x111190: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:343)
+   n1: 349999111 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+    n1: 349999111 0x4A5E608: start_thread (pthread_create.c:477)
+     n0: 349999111 0x4B9A292: clone (clone.S:95)
+  n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n1: 112752695 0x110EF5: _M_construct<char const*> (basic_string.tcc:219)
+  n1: 112752695 0x110EF5: _M_construct_aux<char const*> (basic_string.h:247)
+   n1: 112752695 0x110EF5: _M_construct<char const*> (basic_string.h:266)
+    n1: 112752695 0x110EF5: basic_string (basic_string.h:513)
+     n1: 112752695 0x110EF5: construct<std::__cxx11::basic_string<char>, char*&, long unsigned int&> (new_allocator.h:147)
+      n1: 112752695 0x110EF5: construct<std::__cxx11::basic_string<char>, char*&, long unsigned int&> (alloc_traits.h:484)
+       n1: 112752695 0x110EF5: _M_create_node<char*&, long unsigned int&> (stl_list.h:633)
+        n1: 112752695 0x110EF5: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+         n1: 112752695 0x110EF5: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+          n1: 112752695 0x110EF5: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+           n1: 112752695 0x110EF5: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:325)
+            n1: 112752695 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+             n1: 112752695 0x4A5E608: start_thread (pthread_create.c:477)
+              n0: 112752695 0x4B9A292: clone (clone.S:95)
+ n2: 50018572 0x499B29E: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 49999873 0x10C7E4: assign (basic_string.h:1366)
+   n1: 49999873 0x10C7E4: operator= (basic_string.h:696)
+    n1: 49999873 0x10C7E4: MergedFileWriter(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (main.cpp:290)
+     n1: 49999873 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+      n1: 49999873 0x4A5E608: start_thread (pthread_create.c:477)
+       n0: 49999873 0x4B9A292: clone (clone.S:95)
+  n0: 18699 in 3 places, all below massif's threshold (1.00%)
+ n0: 132004 in 36 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=42
+#-----------
+time=1725305324112
+mem_heap_B=685470231
+mem_heap_extra_B=83538673
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=43
+#-----------
+time=1761568863699
+mem_heap_B=730785523
+mem_heap_extra_B=85162453
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=1797832402642
+mem_heap_B=853320974
+mem_heap_extra_B=106352338
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=1854818031787
+mem_heap_B=793147359
+mem_heap_extra_B=118451913
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=46
+#-----------
+time=1898852319949
+mem_heap_B=509681444
+mem_heap_extra_B=66936236
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=47
+#-----------
+time=1948067118501
+mem_heap_B=476131408
+mem_heap_extra_B=16279656
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=2010470995425
+mem_heap_B=656700213
+mem_heap_extra_B=81225883
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=49
+#-----------
+time=2025359792491
+mem_heap_B=749821294
+mem_heap_extra_B=79012178
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=2027363688546
+mem_heap_B=698498488
+mem_heap_extra_B=68035136
+mem_stacks_B=0
+heap_tree=detailed
+n5: 698498488 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 349999111 0x499B87F: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve(unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 349999111 0x111190: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:343)
+   n1: 349999111 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+    n1: 349999111 0x4A5E608: start_thread (pthread_create.c:477)
+     n0: 349999111 0x4B9A292: clone (clone.S:95)
+  n0: 0 in 2 places, all below massif's threshold (1.00%)
+ n1: 151019761 0x110EF5: _M_construct<char const*> (basic_string.tcc:219)
+  n1: 151019761 0x110EF5: _M_construct_aux<char const*> (basic_string.h:247)
+   n1: 151019761 0x110EF5: _M_construct<char const*> (basic_string.h:266)
+    n1: 151019761 0x110EF5: basic_string (basic_string.h:513)
+     n1: 151019761 0x110EF5: construct<std::__cxx11::basic_string<char>, char*&, long unsigned int&> (new_allocator.h:147)
+      n1: 151019761 0x110EF5: construct<std::__cxx11::basic_string<char>, char*&, long unsigned int&> (alloc_traits.h:484)
+       n1: 151019761 0x110EF5: _M_create_node<char*&, long unsigned int&> (stl_list.h:633)
+        n1: 151019761 0x110EF5: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+         n1: 151019761 0x110EF5: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+          n1: 151019761 0x110EF5: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+           n1: 151019761 0x110EF5: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:325)
+            n1: 151019761 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+             n1: 151019761 0x4A5E608: start_thread (pthread_create.c:477)
+              n0: 151019761 0x4B9A292: clone (clone.S:95)
+ n1: 147329040 0x110EC5: allocate (new_allocator.h:114)
+  n1: 147329040 0x110EC5: allocate (alloc_traits.h:444)
+   n1: 147329040 0x110EC5: _M_get_node (stl_list.h:438)
+    n1: 147329040 0x110EC5: _M_create_node<char*&, long unsigned int&> (stl_list.h:630)
+     n1: 147329040 0x110EC5: _M_insert<char*&, long unsigned int&> (stl_list.h:1907)
+      n1: 147329040 0x110EC5: emplace_back<char*&, long unsigned int&> (stl_list.h:1223)
+       n1: 147329040 0x110EC5: ReadLines<std::__cxx11::list<std::__cxx11::basic_string<char> > > (main.cpp:155)
+        n1: 147329040 0x110EC5: KWayMerged(int, int, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, int, unsigned long, unsigned long) (main.cpp:325)
+         n1: 147329040 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+          n1: 147329040 0x4A5E608: start_thread (pthread_create.c:477)
+           n0: 147329040 0x4B9A292: clone (clone.S:95)
+ n2: 50018572 0x499B29E: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+  n1: 49999873 0x10C7E4: assign (basic_string.h:1366)
+   n1: 49999873 0x10C7E4: operator= (basic_string.h:696)
+    n1: 49999873 0x10C7E4: MergedFileWriter(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (main.cpp:290)
+     n1: 49999873 0x492EDE3: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28)
+      n1: 49999873 0x4A5E608: start_thread (pthread_create.c:477)
+       n0: 49999873 0x4B9A292: clone (clone.S:95)
+  n0: 18699 in 3 places, all below massif's threshold (1.00%)
+ n0: 132004 in 36 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=51
+#-----------
+time=2029367586607
+mem_heap_B=647904515
+mem_heap_extra_B=55231573
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=52
+#-----------
+time=2031371483383
+mem_heap_B=598106785
+mem_heap_extra_B=41455687
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=53
+#-----------
+time=2033375378751
+mem_heap_B=546274695
+mem_heap_extra_B=30249281
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=54
+#-----------
+time=2035379277570
+mem_heap_B=495835479
+mem_heap_extra_B=19593649
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=55
+#-----------
+time=2037383172951
+mem_heap_B=448067351
+mem_heap_extra_B=9953145
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=56
+#-----------
+time=2039387070606
+mem_heap_B=412955431
+mem_heap_extra_B=13523937
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=57
+#-----------
+time=2041390965839
+mem_heap_B=483870563
+mem_heap_extra_B=17830653
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=58
+#-----------
+time=2043394861256
+mem_heap_B=431164569
+mem_heap_extra_B=6066703
+mem_stacks_B=0
+heap_tree=empty
