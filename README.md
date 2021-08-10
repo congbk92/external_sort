@@ -14,6 +14,8 @@ In next version, the following will be consider to implement:
 * AlphaSort which one is very fast if there are multiple disks diver such as RAID technique in sever.
 * Batch replacement selection which was improved from replacement selection algorithm. It can handle variable length record.
 
+**Noted**: *It load multiple page of input file at once. So when memory limit was set lower than page_size x 5, It worked but memory was cosummed very higher than memory limit.*
+
 ## Getting Started
 
 ### Dependencies
