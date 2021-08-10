@@ -67,7 +67,7 @@ size_t GetInitialBufferSize(long memLimitedSize){
 
 int GetMaxKWays(long memLimitedSize){
     int max_k = memLimitedSize/2/getpagesize()-1; //ensure each buff > 1 page
-    return min(max_k, 500); //To Do
+    return max_k < 2 ? 2 : max_k < 500 ? max_k : 500; //To Do
 }
 
 int GetMergeReaderBatchSize(long memLimitedSize, int k){
@@ -87,6 +87,26 @@ int GetMergeWriterBatchSize(long memLimitedSize){
 size_t GetMergeWriterBufferSize(long memLimitedSize){
     int num = memLimitedSize/GetMergeWriterBatchSize(memLimitedSize) - 2;
     return max(num, MIN_BUFFER_SIZE);
+}
+
+
+bool isFileExisted(const string &fileName){
+    int fd = open64(fileName.c_str(), O_RDONLY);
+    if (fd == -1) {
+        return false;
+    }
+    return true;
+}
+
+off_t getFileSize(const string &fileName){
+    int fd = open64(fileName.c_str(), O_RDONLY);
+    if (fd == -1) {
+        return 0;
+    }
+
+    struct stat64 st;
+    fstat64(fd, &st);
+    return st.st_size;
 }
 
 /*-------------------------------------*/
@@ -395,25 +415,43 @@ int main(int argc, char **argv)
     // Check input
     if (argc < 4)
     {
-        cout << "Invalid";
+        cout << "Invalid"<<endl;
         return 0;
     }
-    
+
+    if (!isFileExisted(argv[1])){
+        cout<<argv[1]<<" didn't existed. Please check!"<<endl;
+        return 0;
+    }
+
+    if (atol(argv[3]) <= 0){
+        cout<<"Memory limited should be higher than 0"<<endl;
+        return 0;
+    }
+
+
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    if (getFileSize(argv[1]) == 0){
+        // output an empty file when input file is empty
+        FILE* pFile = fopen (argv[2], "wb+");
+        if (pFile == NULL){
+            cout<<"Can't open "<<argv[2]<<" to write"<<endl;
+        }
+        fclose(pFile);
+    } else{
+        string inputFile(argv[1]);
+        string outputFile(argv[2]);
+        long memLimitSize = atol(argv[3]);
+        ifstream inF(inputFile, ifstream::in);
 
-    string inputFile(argv[1]);
-    string outputFile(argv[2]);
-    long memLimitSize = atol(argv[3]);
-    ifstream inF(inputFile, ifstream::in);
-    
-    string prefixTmpFile = outputFile;
-    //Initial phase
-    int numRun = InitialPhase(inputFile, prefixTmpFile, memLimitSize);
-    std::cout << "InitialPhase numRun =  "<<numRun<<std::endl;
+        string prefixTmpFile = outputFile;
+        //Initial phase
+        int numRun = InitialPhase(inputFile, prefixTmpFile, memLimitSize);
+        std::cout << "InitialPhase numRun =  "<<numRun<<std::endl;
 
-    //Merged phase
-    MergedPhase(prefixTmpFile, outputFile, numRun, memLimitSize); //TO DO
-
+        //Merged phase
+        MergedPhase(prefixTmpFile, outputFile, numRun, memLimitSize); //TO DO
+    }
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     std::cout << "Elapsed time = " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << "[s]" << std::endl;
     return 1;
